@@ -2,8 +2,8 @@
 
 import { Service } from '@/lib/types';
 import Link from 'next/link';
-import { ChevronUp, CheckCircle2 } from 'lucide-react';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
+import { CheckCircle2 } from 'lucide-react';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { UpvoteButton } from './UpvoteButton';
 

@@ -1,7 +1,8 @@
 'use client';
 
 import { Service } from '@/lib/types';
-import { ServiceCard } from './ServiceCard';
+import { ChevronUp, CheckCircle } from 'lucide-react';
+import { ProtocolBadge } from './ProtocolBadge';
 
 interface ServiceGridProps {
   services: Service[];
@@ -12,19 +13,69 @@ export function ServiceGrid({ services, title }: ServiceGridProps) {
   if (services.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <p className="text-lg text-gray-400">No services found</p>
+        <p className="text-lg text-zinc-400">No services found</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-0">
       {title && (
-        <h2 className="text-xl font-semibold text-white">{title}</h2>
+        <h2 className="text-xl font-semibold text-white mb-6">{title}</h2>
       )}
-      <div className="flex flex-col space-y-4">
-        {services.map((service, index) => (
-          <ServiceCard key={service.id} service={service} rank={index + 1} />
+      <div className="flex flex-col">
+        {services.map((service) => (
+          <div
+            key={service.id}
+            className="flex flex-col md:flex-row md:items-start gap-4 p-4 hover:bg-white/[0.02] border-b border-white/5 transition-colors group"
+          >
+            {/* LEFT: Thumbnail */}
+            <div className="flex-shrink-0 w-14 h-14 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-600/20 flex items-center justify-center">
+              <span className="text-2xl font-bold text-orange-500">
+                {service.name.charAt(0)}
+              </span>
+            </div>
+
+            {/* CENTER: Service info */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-semibold text-white text-base">
+                  {service.name}
+                </span>
+                {service.verified && (
+                  <CheckCircle className="w-4 text-green-500" />
+                )}
+                <span className="text-sm text-zinc-400 truncate">
+                  — {service.description}
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2 text-xs text-zinc-500 mt-1">
+                <ProtocolBadge protocol={service.protocol} />
+                <span>·</span>
+                <span>{service.priceText}</span>
+                <span>·</span>
+                <span className="text-zinc-600">{service.network}</span>
+              </div>
+            </div>
+
+            {/* RIGHT: Upvote button */}
+            <div className="flex-shrink-0 w-16">
+              <div className="flex flex-col items-center">
+                <div className="rounded-lg border border-zinc-700 hover:border-orange-500/50 p-2 transition-colors">
+                  <ChevronUp className="w-5 text-orange-500" />
+                  <div className="text-sm font-semibold text-white mt-1">
+                    {service.agentUpvotes + service.humanUpvotes}
+                  </div>
+                </div>
+                <div className="text-[10px] text-zinc-400 mt-1">
+                  <span className="text-orange-500">🤖 {service.agentUpvotes}</span>
+                  <span className="mx-1">·</span>
+                  <span className="text-blue-400">👤 {service.humanUpvotes}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </div>

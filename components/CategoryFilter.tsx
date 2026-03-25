@@ -1,6 +1,7 @@
 'use client';
 
 import { Category } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 interface CategoryFilterProps {
   activeCategory: Category | 'all';
@@ -22,16 +23,17 @@ export function CategoryFilter({
   ];
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2">
+    <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
       {categories.map((cat) => (
         <button
           key={cat.id}
           onClick={() => onCategoryChange(cat.id)}
-          className={`rounded-full px-3 py-1 text-xs font-medium transition-all ${
+          className={cn(
+            "px-3 py-1 rounded-full text-xs font-medium transition-colors",
             activeCategory === cat.id
-              ? 'bg-white text-gray-900 shadow-lg shadow-white/10'
-              : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/5'
-          }`}
+              ? "bg-white text-black"
+              : "bg-transparent text-zinc-400 border border-white/10 hover:border-white/30 hover:text-white"
+          )}
         >
           {cat.label}
         </button>

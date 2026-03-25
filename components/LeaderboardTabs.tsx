@@ -1,15 +1,8 @@
 'use client';
 
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { cn } from '@/lib/utils';
 
 type Tab = 'daily' | 'weekly' | 'all-time' | 'new';
-
-const tabs: { id: Tab; label: string }[] = [
-  { id: 'daily', label: 'Daily' },
-  { id: 'weekly', label: 'Weekly' },
-  { id: 'all-time', label: 'All-Time' },
-  { id: 'new', label: 'New' },
-];
 
 interface LeaderboardTabsProps {
   activeTab: Tab;
@@ -17,19 +10,32 @@ interface LeaderboardTabsProps {
 }
 
 export function LeaderboardTabs({ activeTab, onTabChange }: LeaderboardTabsProps) {
+  const tabs = [
+    { id: 'daily', label: 'Trending' },
+    { id: 'weekly', label: 'Top This Week' },
+    { id: 'all-time', label: 'All Time' },
+    { id: 'new', label: 'New' },
+  ];
+
   return (
-    <Tabs value={activeTab} onValueChange={(value) => onTabChange(value as Tab)} className="w-full">
-      <TabsList className="grid grid-cols-4 bg-white/5 h-10">
+    <div className="flex items-center justify-center gap-6 mb-6">
+      <p className="text-sm text-gray-400">Today — March 25, 2026</p>
+      <div className="flex items-center gap-4">
         {tabs.map((tab) => (
-          <TabsTrigger
+          <button
             key={tab.id}
-            value={tab.id}
-            className="data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:hover:bg-orange-600 data-[state=active]:shadow-lg data-[state=active]:shadow-orange-500/20"
+            onClick={() => onTabChange(tab.id as Tab)}
+            className={cn(
+              "text-sm transition-colors hover:text-white",
+              activeTab === tab.id
+                ? "text-white border-b-2 border-orange-500 pb-0.5"
+                : "text-zinc-400"
+            )}
           >
             {tab.label}
-          </TabsTrigger>
+          </button>
         ))}
-      </TabsList>
-    </Tabs>
+      </div>
+    </div>
   );
 }
