@@ -51,9 +51,9 @@ export function ServiceCard({ service, rank }: ServiceCardProps) {
           {/* RIGHT: Upvote button */}
           <div className="flex-shrink-0 w-14 hidden md:block">
             <UpvoteButton
+              serviceId={service.id}
               agentUpvotes={service.agentUpvotes}
               humanUpvotes={service.humanUpvotes}
-              disabled={true}
             />
           </div>
         </div>

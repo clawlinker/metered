@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Zap, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export function Navbar() {
   return (
@@ -20,12 +21,16 @@ export function Navbar() {
               Submit
             </Link>
           </Button>
-          <Button variant="outline" size="sm" className="hidden md:flex">
-            Connect Wallet
-          </Button>
-          <Button variant="default" size="sm" asChild className="hidden md:flex">
-            <Link href="/submit">Submit</Link>
-          </Button>
+          <div className="hidden md:flex items-center gap-2">
+            <ConnectButton
+              showBalance={false}
+              chainStatus="none"
+              accountStatus="address"
+            />
+            <Button variant="default" size="sm" asChild>
+              <Link href="/submit">Submit</Link>
+            </Button>
+          </div>
         </nav>
       </div>
     </header>

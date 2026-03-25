@@ -44,3 +44,7 @@ secrets/
 *.db-journal
 *.sqlite
 .vercel
+
+# SQLite WAL files
+data/*.db-shm
+data/*.db-wal
