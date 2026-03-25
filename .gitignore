@@ -43,3 +43,4 @@ secrets/
 *.db
 *.db-journal
 *.sqlite
+.vercel
