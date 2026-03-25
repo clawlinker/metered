@@ -1,15 +1,23 @@
 'use client';
 
 import { Protocol } from '@/lib/types';
-
-const protocolColors: Record<Protocol, string> = {
-  x402: 'bg-orange-500/10 text-orange-500 border-orange-500/20',
-  mpp: 'bg-green-500/10 text-green-500 border-green-500/20',
-  acp: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-  other: 'bg-gray-500/10 text-gray-500 border-gray-500/20',
-};
+import { Badge } from '@/components/ui/badge';
 
 export function ProtocolBadge({ protocol }: { protocol: Protocol }) {
+  const variants: Record<Protocol, 'default' | 'secondary' | 'outline'> = {
+    x402: 'default',
+    mpp: 'secondary',
+    acp: 'secondary',
+    other: 'outline',
+  };
+
+  const bgColors: Record<Protocol, string> = {
+    x402: 'bg-orange-500 text-white border-orange-500',
+    mpp: 'bg-green-500 text-white border-green-500',
+    acp: 'bg-purple-500 text-white border-purple-500',
+    other: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+  };
+
   const label = {
     x402: 'x402',
     mpp: 'MPP',
@@ -18,8 +26,8 @@ export function ProtocolBadge({ protocol }: { protocol: Protocol }) {
   }[protocol];
 
   return (
-    <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${protocolColors[protocol]}`}>
+    <Badge variant="outline" className={`${bgColors[protocol]} border px-2 py-0.5 text-xs font-medium`}>
       {label}
-    </span>
+    </Badge>
   );
 }

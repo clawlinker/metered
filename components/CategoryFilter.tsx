@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Category } from '@/lib/types';
 
 interface CategoryFilterProps {
@@ -28,10 +27,10 @@ export function CategoryFilter({
         <button
           key={cat.id}
           onClick={() => onCategoryChange(cat.id)}
-          className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+          className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
             activeCategory === cat.id
-              ? 'bg-white text-gray-900'
-              : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+              ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
+              : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/5'
           }`}
         >
           {cat.label}

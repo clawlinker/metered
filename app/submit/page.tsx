@@ -1,10 +1,24 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 
 export default function SubmitPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    url: '',
+    description: '',
+    protocol: 'x402',
+    category: 'data',
+    price: '',
+    network: '',
+    contact: '',
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,6 +29,10 @@ export default function SubmitPage() {
       setIsSubmitting(false);
       setSuccess(true);
     }, 1500);
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   if (success) {
@@ -30,12 +48,9 @@ export default function SubmitPage() {
           <p className="text-gray-400 mb-6">
             Thank you for your submission. Our team will review it and get back to you shortly.
           </p>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-medium text-gray-900 hover:bg-gray-100 transition-colors"
-          >
-            Back to Home
-          </a>
+          <Button asChild className="bg-white text-gray-900 hover:bg-gray-100">
+            <a href="/">Back to Home</a>
+          </Button>
         </div>
       </div>
     );
@@ -57,11 +72,12 @@ export default function SubmitPage() {
               <label htmlFor="name" className="text-sm font-medium text-gray-300">
                 Service Name *
               </label>
-              <input
+              <Input
                 id="name"
                 type="text"
                 required
-                className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-2.5 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+                value={formData.name}
+                onChange={(e) => handleInputChange('name', e.target.value)}
                 placeholder="e.g., Pawr Link"
               />
             </div>
@@ -70,11 +86,12 @@ export default function SubmitPage() {
               <label htmlFor="url" className="text-sm font-medium text-gray-300">
                 Website URL *
               </label>
-              <input
+              <Input
                 id="url"
                 type="url"
                 required
-                className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-2.5 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+                value={formData.url}
+                onChange={(e) => handleInputChange('url', e.target.value)}
                 placeholder="https://example.com"
               />
             </div>
@@ -84,11 +101,12 @@ export default function SubmitPage() {
             <label htmlFor="description" className="text-sm font-medium text-gray-300">
               Description *
             </label>
-            <textarea
+            <Textarea
               id="description"
               required
               rows={4}
-              className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-2.5 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors resize-none"
+              value={formData.description}
+              onChange={(e) => handleInputChange('description', e.target.value)}
               placeholder="Briefly describe your API service..."
             />
           </div>
@@ -100,7 +118,9 @@ export default function SubmitPage() {
               </label>
               <select
                 id="protocol"
-                className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-2.5 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+                className="w-full rounded-lg bg-black/30 border border-input px-3 py-2 text-white focus:border-ring focus:ring-1 focus:ring-ring/50 outline-none transition-colors"
+                value={formData.protocol}
+                onChange={(e) => handleInputChange('protocol', e.target.value)}
               >
                 <option value="x402">x402</option>
                 <option value="mpp">MPP</option>
@@ -115,7 +135,9 @@ export default function SubmitPage() {
               </label>
               <select
                 id="category"
-                className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-2.5 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+                className="w-full rounded-lg bg-black/30 border border-input px-3 py-2 text-white focus:border-ring focus:ring-1 focus:ring-ring/50 outline-none transition-colors"
+                value={formData.category}
+                onChange={(e) => handleInputChange('category', e.target.value)}
               >
                 <option value="data">Data</option>
                 <option value="trading">Trading</option>
@@ -132,11 +154,12 @@ export default function SubmitPage() {
               <label htmlFor="price" className="text-sm font-medium text-gray-300">
                 Pricing *
               </label>
-              <input
+              <Input
                 id="price"
                 type="text"
                 required
-                className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-2.5 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+                value={formData.price}
+                onChange={(e) => handleInputChange('price', e.target.value)}
                 placeholder="e.g., $0.10/req, free tier, varies"
               />
             </div>
@@ -145,11 +168,12 @@ export default function SubmitPage() {
               <label htmlFor="network" className="text-sm font-medium text-gray-300">
                 Network *
               </label>
-              <input
+              <Input
                 id="network"
                 type="text"
                 required
-                className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-2.5 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+                value={formData.network}
+                onChange={(e) => handleInputChange('network', e.target.value)}
                 placeholder="e.g., Base, Ethereum, Solana"
               />
             </div>
@@ -159,22 +183,23 @@ export default function SubmitPage() {
             <label htmlFor="contact" className="text-sm font-medium text-gray-300">
               Contact Email *
             </label>
-            <input
+            <Input
               id="contact"
               type="email"
               required
-              className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-2.5 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-colors"
+              value={formData.contact}
+              onChange={(e) => handleInputChange('contact', e.target.value)}
               placeholder="contact@example.com"
             />
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-lg bg-orange-500 px-6 py-4 font-bold text-white hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white"
           >
             {isSubmitting ? 'Submitting...' : 'Submit Service'}
-          </button>
+          </Button>
 
           <p className="text-center text-sm text-gray-500">
             By submitting, you agree to our community guidelines. All submissions are subject to review.

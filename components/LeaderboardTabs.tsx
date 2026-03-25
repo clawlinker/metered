@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 type Tab = 'daily' | 'weekly' | 'all-time' | 'new';
 
@@ -18,20 +18,18 @@ interface LeaderboardTabsProps {
 
 export function LeaderboardTabs({ activeTab, onTabChange }: LeaderboardTabsProps) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2">
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          onClick={() => onTabChange(tab.id)}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-            activeTab === tab.id
-              ? 'bg-orange-500 text-white'
-              : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
-          }`}
-        >
-          {tab.label}
-        </button>
-      ))}
-    </div>
+    <Tabs value={activeTab} onValueChange={(value) => onTabChange(value as Tab)} className="w-full">
+      <TabsList className="grid grid-cols-4 bg-white/5">
+        {tabs.map((tab) => (
+          <TabsTrigger
+            key={tab.id}
+            value={tab.id}
+            className="data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:hover:bg-orange-600"
+          >
+            {tab.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </Tabs>
   );
 }

@@ -5,6 +5,7 @@ import { ServiceGrid } from '@/components/ServiceGrid';
 import { LeaderboardTabs } from '@/components/LeaderboardTabs';
 import { CategoryFilter } from '@/components/CategoryFilter';
 import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 
 type Tab = 'daily' | 'weekly' | 'all-time' | 'new';
 
@@ -18,18 +19,21 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Hero Section */}
-      <div className="mb-12 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
-          Metered
-        </h1>
-        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+      {/* Hero Section - Compact */}
+      <div className="mb-8 text-center">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <Badge variant="default" className="bg-orange-500 hover:bg-orange-600 text-white">
+            Beta
+          </Badge>
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Metered</h1>
+        <p className="text-base text-gray-400 max-w-xl mx-auto">
           Discover and upvote the best paid API services. Protocol-agnostic. Agent-verified.
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="mb-8">
+      <div className="mb-6">
         <LeaderboardTabs activeTab={activeTab} onTabChange={setActiveTab} />
       </div>
 
@@ -38,7 +42,7 @@ export default function HomePage() {
         <CategoryFilter activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
       </div>
 
-      {/* Services Grid */}
+      {/* Services Grid - Vertical Leaderboard */}
       <ServiceGrid
         services={filteredServices}
         title={
