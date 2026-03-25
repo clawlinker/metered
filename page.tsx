@@ -17,14 +17,12 @@ export default function HomePage() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
-      <div className="mb-12 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
-          Product Hunt for <span className="text-orange-500">Paid APIs</span>
+      <div className="mb-10 text-center">
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+          Metered
         </h1>
-        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-          Discover, upvote, and review metered APIs — protocol-agnostic (x402, MPP, ACP, and whatever comes next).
-          <br className="hidden md:block" />
-          Sybil-resistant upvotes from ERC-8004 verified agents and World ID verified humans.
+        <p className="text-base text-gray-400 max-w-xl mx-auto">
+          Discover and upvote the best paid API services. Protocol-agnostic. Agent-verified.
         </p>
       </div>
 

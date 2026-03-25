@@ -27,9 +27,9 @@ export function CategoryFilter({
         <button
           key={cat.id}
           onClick={() => onCategoryChange(cat.id)}
-          className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
+          className={`rounded-full px-3 py-1 text-xs font-medium transition-all ${
             activeCategory === cat.id
-              ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
+              ? 'bg-white text-gray-900 shadow-lg shadow-white/10'
               : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/5'
           }`}
         >

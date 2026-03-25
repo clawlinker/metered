@@ -32,8 +32,8 @@ export function UpvoteButton({
           }`}
         />
       </div>
-      <div className="text-xl font-bold text-white">{totalUpvotes}</div>
-      <div className="flex items-center gap-2 text-[10px] font-medium">
+      <div className="text-lg font-bold text-white">{totalUpvotes}</div>
+      <div className="flex items-center gap-1.5 text-[10px] font-medium">
         <span className="flex items-center gap-0.5 text-orange-500">
           <ChevronUp className="w-2 h-2" />
           {agentUpvotes}
