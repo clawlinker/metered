@@ -14,11 +14,11 @@ interface ServiceCardProps {
 
 export function ServiceCard({ service, rank }: ServiceCardProps) {
   return (
-    <Card className="bg-white/5 border border-white/10 hover:border-muted-foreground/30 transition-colors">
-      <CardContent className="py-3 px-4">
-        <div className="flex items-center gap-4">
+    <Card className="bg-white/5 border border-white/10 hover:border-muted-foreground/30 transition-colors md:border-none">
+      <CardContent className="py-3 px-0 md:px-4">
+        <div className="flex items-start gap-3 md:gap-4">
           {/* LEFT: Rank number */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 hidden md:block">
             <span className="text-lg font-bold text-white">#{rank}</span>
           </div>
 
@@ -43,13 +43,13 @@ export function ServiceCard({ service, rank }: ServiceCardProps) {
             >
               {service.name}
             </Link>
-            <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+            <p className="text-sm text-muted-foreground line-clamp-1 md:line-clamp-2 mt-1">
               {service.description}
             </p>
           </div>
 
           {/* RIGHT: Upvote button */}
-          <div className="flex-shrink-0 pl-2">
+          <div className="flex-shrink-0 w-14 hidden md:block">
             <UpvoteButton
               agentUpvotes={service.agentUpvotes}
               humanUpvotes={service.humanUpvotes}
@@ -59,11 +59,11 @@ export function ServiceCard({ service, rank }: ServiceCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="py-3 px-4 border-t border-white/5 mt-2 gap-4">
+      <CardFooter className="py-3 px-0 md:px-4 border-t border-white/5 mt-2 gap-4 md:gap-0">
         <div className="text-sm text-white font-medium">
           {service.priceText}
         </div>
-        <div className="text-xs text-gray-400 ml-auto">
+        <div className="text-xs text-gray-400 ml-auto hidden md:block">
           {service.network}
         </div>
       </CardFooter>

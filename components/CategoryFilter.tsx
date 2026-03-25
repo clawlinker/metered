@@ -23,21 +23,23 @@ export function CategoryFilter({
   ];
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
-      {categories.map((cat) => (
-        <button
-          key={cat.id}
-          onClick={() => onCategoryChange(cat.id)}
-          className={cn(
-            "px-3 py-1 rounded-full text-xs font-medium transition-colors",
-            activeCategory === cat.id
-              ? "bg-white text-black"
-              : "bg-transparent text-zinc-400 border border-white/10 hover:border-white/30 hover:text-white"
-          )}
-        >
-          {cat.label}
-        </button>
-      ))}
+    <div className="flex items-center justify-center mb-8 overflow-x-auto whitespace-nowrap flex-nowrap scrollbar-hide">
+      <div className="flex items-center gap-2 px-2 md:gap-2">
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => onCategoryChange(cat.id)}
+            className={cn(
+              "px-3 py-1 rounded-full text-xs font-medium transition-colors whitespace-nowrap",
+              activeCategory === cat.id
+                ? "bg-white text-black"
+                : "bg-transparent text-zinc-400 border border-white/10 hover:border-white/30 hover:text-white"
+            )}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

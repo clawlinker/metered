@@ -19,7 +19,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-950">
       {/* Hero Section - Compact (removed big logo, using navbar) */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
         <p className="text-sm text-zinc-400 text-center mb-8">
           Discover paid API services. Agent-verified upvotes.
         </p>

@@ -18,23 +18,25 @@ export function LeaderboardTabs({ activeTab, onTabChange }: LeaderboardTabsProps
   ];
 
   return (
-    <div className="flex items-center justify-center gap-6 mb-6">
-      <p className="text-sm text-gray-400">Today — March 25, 2026</p>
-      <div className="flex items-center gap-4">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => onTabChange(tab.id as Tab)}
-            className={cn(
-              "text-sm transition-colors hover:text-white",
-              activeTab === tab.id
-                ? "text-white border-b-2 border-orange-500 pb-0.5"
-                : "text-zinc-400"
-            )}
-          >
-            {tab.label}
-          </button>
-        ))}
+    <div className="mb-6">
+      <p className="text-sm text-gray-400 text-center mb-3 md:mb-4">Today — March 25, 2026</p>
+      <div className="flex items-center justify-center overflow-x-auto whitespace-nowrap scrollbar-hide">
+        <div className="flex items-center gap-2 md:gap-4 px-2">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => onTabChange(tab.id as Tab)}
+              className={cn(
+                "text-sm whitespace-nowrap transition-colors hover:text-white",
+                activeTab === tab.id
+                  ? "text-white border-b-2 border-orange-500 pb-0.5"
+                  : "text-zinc-400"
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

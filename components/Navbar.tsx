@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Zap } from 'lucide-react';
+import { Zap, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function Navbar() {
@@ -14,11 +14,17 @@ export function Navbar() {
         </Link>
 
         <nav className="flex items-center gap-2">
-          <Button variant="default" size="sm" asChild>
-            <Link href="/submit">Submit</Link>
+          <Button variant="default" size="sm" asChild className="md:hidden">
+            <Link href="/submit">
+              <Plus className="w-4 h-4 mr-1" />
+              Submit
+            </Link>
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="hidden md:flex">
             Connect Wallet
+          </Button>
+          <Button variant="default" size="sm" asChild className="hidden md:flex">
+            <Link href="/submit">Submit</Link>
           </Button>
         </nav>
       </div>
