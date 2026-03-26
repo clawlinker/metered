@@ -48,3 +48,12 @@ secrets/
 # SQLite WAL files
 data/*.db-shm
 data/*.db-wal
+
+# Paperclip agent artifacts
+.paperclip/instances/
+*.log
+
+# Additional safety
+*.secret
+*.token
+api-keys/

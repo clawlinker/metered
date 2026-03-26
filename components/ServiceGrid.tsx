@@ -1,7 +1,7 @@
 'use client';
 
 import { Service } from '@/lib/types';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, SearchX } from 'lucide-react';
 import { ProtocolBadge } from './ProtocolBadge';
 import { UpvoteButton } from './UpvoteButton';
 import Link from 'next/link';
@@ -14,9 +14,14 @@ interface ServiceGridProps {
 export function ServiceGrid({ services, title }: ServiceGridProps) {
   if (services.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <p className="text-lg text-zinc-400">No services found</p>
-        <p className="text-sm text-zinc-600 mt-1">Try adjusting your filters or search query</p>
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-5">
+          <SearchX className="w-7 h-7 text-zinc-500" />
+        </div>
+        <p className="text-base font-medium text-zinc-300 mb-1.5">No services found</p>
+        <p className="text-sm text-zinc-600 max-w-xs">
+          Try adjusting your search query or clearing the category filter to see all services.
+        </p>
       </div>
     );
   }

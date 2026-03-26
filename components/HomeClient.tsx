@@ -6,24 +6,42 @@ import { LeaderboardTabs } from '@/components/LeaderboardTabs';
 import { CategoryFilter } from '@/components/CategoryFilter';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import { getServices } from '@/lib/actions';
 
 type Tab = 'daily' | 'weekly' | 'all-time' | 'new';
 type CategoryFilter_T = 'all' | 'data' | 'trading' | 'ai-ml' | 'identity' | 'social' | 'infra';
 
 interface HomeClientProps {
-  initialServices: Service[];
+  initialServices?: Service[];
 }
 
-export function HomeClient({ initialServices }: HomeClientProps) {
+export function HomeClient({ initialServices: propServices }: HomeClientProps) {
   const [activeTab, setActiveTab] = useState<Tab>('daily');
   const [activeCategory, setActiveCategory] = useState<CategoryFilter_T>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch services from API on mount
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const data = await getServices();
+        setServices(data);
+      } catch (err) {
+        console.error('Failed to fetch services:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
 
   const filteredServices = useMemo(() => {
     let result = activeCategory === 'all'
-      ? initialServices
-      : initialServices.filter((s) => s.category === activeCategory);
+      ? services
+      : services.filter((s) => s.category === activeCategory);
 
     // Apply search filter
     if (searchQuery.trim()) {
@@ -45,13 +63,24 @@ export function HomeClient({ initialServices }: HomeClientProps) {
     }
 
     return result;
-  }, [initialServices, activeCategory, activeTab, searchQuery]);
+  }, [services, activeCategory, activeTab, searchQuery]);
 
   const sectionTitle = searchQuery.trim()
     ? `${filteredServices.length} result${filteredServices.length !== 1 ? 's' : ''} for "${searchQuery}"`
     : activeCategory === 'all'
     ? `${activeTab === 'new' ? 'New' : activeTab === 'all-time' ? 'All Time' : activeTab === 'weekly' ? 'Top This Week' : 'Trending'} Services`
     : `${activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)} Services`;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-zinc-400">Loading services...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-950">

@@ -1,29 +1,42 @@
 'use server';
 
-import { dbGetServices, dbAddVote, dbGetVotesForService, dbHasVoted, dbGetVoteCounts, ServiceRow } from './db';
 import { Service } from './types';
 
-function rowToService(row: ServiceRow): Service {
-  return {
-    id: row.id,
-    name: row.name,
-    slug: row.slug,
-    description: row.description,
-    url: row.url,
-    protocol: row.protocol as Service['protocol'],
-    category: row.category as Service['category'],
-    priceText: row.priceText,
-    network: row.network,
-    submittedAt: row.submittedAt,
-    verified: row.verified === 1,
-    agentUpvotes: row.agentUpvotes,
-    humanUpvotes: row.humanUpvotes,
-  };
-}
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
 
 export async function getServices(category?: string, sortBy?: string): Promise<Service[]> {
-  const rows = await dbGetServices(category);
-  return rows.map(rowToService);
+  let url = `${API_BASE}/api/services`;
+  if (category) {
+    url += `?category=${category}`;
+  }
+  if (sortBy) {
+    url += `&sortBy=${sortBy}`;
+  }
+  
+  try {
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error('Failed to fetch services');
+    const data = await res.json();
+    return data.services || [];
+  } catch (err) {
+    console.error('Error fetching services:', err);
+    return [];
+  }
+}
+
+export async function getServiceBySlug(slug: string): Promise<Service | undefined> {
+  try {
+    const res = await fetch(`${API_BASE}/api/services/${slug}`, { next: { revalidate: 60 } });
+    if (!res.ok) {
+      if (res.status === 404) return undefined;
+      throw new Error('Failed to fetch service');
+    }
+    const data = await res.json();
+    return data.service;
+  } catch (err) {
+    console.error('Error fetching service:', err);
+    return undefined;
+  }
 }
 
 export async function upvote(
@@ -32,18 +45,39 @@ export async function upvote(
   voterType: string,
   signature: string
 ): Promise<{ success: boolean; error?: string; agentUpvotes?: number; humanUpvotes?: number }> {
-  const result = await dbAddVote(serviceId, voterAddress, voterType, signature);
-  if (!result.success) {
-    return result;
+  try {
+    const res = await fetch(`${API_BASE}/api/votes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ serviceId, voterAddress, voterType, signature }),
+    });
+    
+    if (!res.ok) {
+      const data = await res.json();
+      return { success: false, error: data.error || 'Failed to upvote' };
+    }
+    
+    const data = await res.json();
+    return { success: true, ...data };
+  } catch (err) {
+    console.error('Error upvoting:', err);
+    return { success: false, error: 'Network error' };
   }
-  const counts = await dbGetVoteCounts(serviceId);
-  return { success: true, ...counts };
 }
 
 export async function getVotesForService(serviceId: string) {
-  return await dbGetVotesForService(serviceId);
+  try {
+    const res = await fetch(`${API_BASE}/api/votes/${serviceId}`);
+    if (!res.ok) throw new Error('Failed to fetch votes');
+    const data = await res.json();
+    return data.votes || [];
+  } catch (err) {
+    console.error('Error fetching votes:', err);
+    return [];
+  }
 }
 
 export async function hasVoted(serviceId: string, voterAddress: string): Promise<boolean> {
-  return await dbHasVoted(serviceId, voterAddress);
+  const votes = await getVotesForService(serviceId);
+  return votes.some((v: any) => v.voterAddress.toLowerCase() === voterAddress.toLowerCase());
 }
