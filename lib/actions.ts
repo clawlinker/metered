@@ -1,42 +1,27 @@
 'use server';
 
 import { Service } from './types';
+import { services as seedServices } from './seed-data';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? window.location.origin : '');
 
 export async function getServices(category?: string, sortBy?: string): Promise<Service[]> {
-  let url = `${API_BASE}/api/services`;
-  if (category) {
-    url += `?category=${category}`;
+  // Use seed data directly — no API call needed for static data
+  let filtered = [...seedServices];
+  if (category && category !== 'all') {
+    filtered = filtered.filter(s => s.category === category);
   }
-  if (sortBy) {
-    url += `&sortBy=${sortBy}`;
+  if (sortBy === 'newest') {
+    filtered.sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime());
+  } else {
+    // Default: sort by total upvotes
+    filtered.sort((a, b) => (b.agentUpvotes + b.humanUpvotes) - (a.agentUpvotes + a.humanUpvotes));
   }
-  
-  try {
-    const res = await fetch(url, { next: { revalidate: 60 } });
-    if (!res.ok) throw new Error('Failed to fetch services');
-    const data = await res.json();
-    return data.services || [];
-  } catch (err) {
-    console.error('Error fetching services:', err);
-    return [];
-  }
+  return filtered;
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | undefined> {
-  try {
-    const res = await fetch(`${API_BASE}/api/services/${slug}`, { next: { revalidate: 60 } });
-    if (!res.ok) {
-      if (res.status === 404) return undefined;
-      throw new Error('Failed to fetch service');
-    }
-    const data = await res.json();
-    return data.service;
-  } catch (err) {
-    console.error('Error fetching service:', err);
-    return undefined;
-  }
+  return seedServices.find(s => s.slug === slug);
 }
 
 export async function upvote(
