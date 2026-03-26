@@ -85,7 +85,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
   return (
     <div className="min-h-screen bg-gray-950">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
-        <p className="text-sm text-zinc-400 text-center mb-8">
+        <p className="text-sm text-zinc-400 text-left md:text-center mb-8">
           Discover paid API services. Agent-verified upvotes.
         </p>
 

@@ -15,13 +15,19 @@ export function Navbar() {
         </Link>
 
         <nav className="flex items-center gap-2">
-          <Button variant="default" size="sm" asChild className="md:hidden">
+          <Button variant="default" size="sm" asChild className="md:hidden min-h-[44px]">
             <Link href="/submit">
               <Plus className="w-4 h-4 mr-1" />
               Submit
             </Link>
           </Button>
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/about"
+              className="text-sm text-zinc-400 hover:text-white transition-colors duration-150"
+            >
+              About
+            </Link>
             <ConnectButton
               showBalance={false}
               chainStatus="none"

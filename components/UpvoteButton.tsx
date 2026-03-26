@@ -83,7 +83,7 @@ export function UpvoteButton({ serviceId, agentUpvotes, humanUpvotes }: UpvoteBu
     <button
       onClick={handleClick}
       disabled={isDisabled}
-      className={`group flex flex-col items-center gap-0.5 rounded-lg border p-1.5 md:p-2 transition-colors ${
+      className={`group flex flex-col items-center gap-0.5 rounded-lg border min-w-[44px] min-h-[44px] px-2 py-1.5 md:p-2 transition-colors ${
         voted
           ? 'border-orange-500/50 bg-orange-500/10 cursor-default'
           : isDisabled

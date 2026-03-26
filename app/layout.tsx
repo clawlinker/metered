@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   description: 'Discover, upvote, and review metered APIs — protocol-agnostic (x402, MPP, ACP, and whatever comes next).',
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,7 +31,7 @@ export default function RootLayout({
       <body className="bg-gray-950 text-white min-h-screen flex flex-col">
         <WalletProvider>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 overflow-x-hidden">{children}</main>
           <Footer />
         </WalletProvider>
       </body>

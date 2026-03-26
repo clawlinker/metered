@@ -43,7 +43,7 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
         {/* Back nav */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors mb-8 group"
+          className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors mb-8 group min-h-[44px]"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           Back to directory
@@ -69,8 +69,8 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
           {/* Title + upvote */}
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{service.name}</h1>
-              <p className="text-base md:text-lg text-zinc-400">{service.description}</p>
+              <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{service.name}</h1>
+              <p className="text-sm md:text-lg text-zinc-400">{service.description}</p>
             </div>
             <div className="flex-shrink-0">
               <UpvoteButton
@@ -84,7 +84,7 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
           <Separator className="my-6 border-white/10" />
 
           {/* Metadata grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mb-6">
             {[
               { label: 'Price', value: service.priceText },
               { label: 'Network', value: service.network },
@@ -128,29 +128,29 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
         {/* Votes breakdown */}
         <div className="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mb-8">
           <h2 className="text-lg font-semibold text-white mb-6">Community Votes</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 gap-3 md:gap-6">
             {/* Total */}
-            <div className="flex flex-col items-center justify-center rounded-xl bg-gray-900/50 border border-white/10 p-6 text-center">
-              <p className="text-xs text-zinc-500 uppercase tracking-wider mb-2">Total</p>
-              <p className="text-5xl font-bold text-white">{totalVotes}</p>
+            <div className="flex flex-col items-center justify-center rounded-xl bg-gray-900/50 border border-white/10 p-3 md:p-6 text-center">
+              <p className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wider mb-1 md:mb-2">Total</p>
+              <p className="text-3xl md:text-5xl font-bold text-white">{totalVotes}</p>
             </div>
             {/* Agent */}
-            <div className="flex flex-col items-center justify-center rounded-xl bg-orange-500/5 border border-orange-500/20 p-6 text-center">
-              <div className="flex items-center gap-2 text-orange-400 mb-2">
-                <Bot className="w-4 h-4" />
-                <p className="text-xs font-medium uppercase tracking-wider">Agent Votes</p>
+            <div className="flex flex-col items-center justify-center rounded-xl bg-orange-500/5 border border-orange-500/20 p-3 md:p-6 text-center">
+              <div className="flex items-center gap-1 md:gap-2 text-orange-400 mb-1 md:mb-2">
+                <Bot className="w-3 h-3 md:w-4 md:h-4" />
+                <p className="text-[10px] md:text-xs font-medium uppercase tracking-wider">Agents</p>
               </div>
-              <p className="text-4xl font-bold text-orange-400">{service.agentUpvotes}</p>
-              <p className="text-xs text-zinc-500 mt-2">ERC-8004 verified agents</p>
+              <p className="text-2xl md:text-4xl font-bold text-orange-400">{service.agentUpvotes}</p>
+              <p className="text-[10px] md:text-xs text-zinc-500 mt-1 md:mt-2 hidden sm:block">ERC-8004 verified</p>
             </div>
             {/* Human */}
-            <div className="flex flex-col items-center justify-center rounded-xl bg-blue-500/5 border border-blue-500/20 p-6 text-center">
-              <div className="flex items-center gap-2 text-blue-400 mb-2">
-                <User className="w-4 h-4" />
-                <p className="text-xs font-medium uppercase tracking-wider">Human Votes</p>
+            <div className="flex flex-col items-center justify-center rounded-xl bg-blue-500/5 border border-blue-500/20 p-3 md:p-6 text-center">
+              <div className="flex items-center gap-1 md:gap-2 text-blue-400 mb-1 md:mb-2">
+                <User className="w-3 h-3 md:w-4 md:h-4" />
+                <p className="text-[10px] md:text-xs font-medium uppercase tracking-wider">Humans</p>
               </div>
-              <p className="text-4xl font-bold text-blue-400">{service.humanUpvotes}</p>
-              <p className="text-xs text-zinc-500 mt-2">Wallet-verified humans</p>
+              <p className="text-2xl md:text-4xl font-bold text-blue-400">{service.humanUpvotes}</p>
+              <p className="text-[10px] md:text-xs text-zinc-500 mt-1 md:mt-2 hidden sm:block">Wallet-verified</p>
             </div>
           </div>
         </div>
@@ -158,8 +158,8 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
         {/* Integration example */}
         <div className="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mb-8">
           <h2 className="text-lg font-semibold text-white mb-4">Example Request</h2>
-          <div className="rounded-xl bg-gray-950 border border-white/10 p-4 overflow-x-auto">
-            <pre className="text-sm text-green-400 font-mono whitespace-pre">
+          <div className="rounded-xl bg-gray-950 border border-white/10 p-4 overflow-x-auto max-w-full">
+            <pre className="text-xs md:text-sm text-green-400 font-mono whitespace-pre-wrap md:whitespace-pre break-all md:break-normal min-w-0">
               {exampleRequests[service.protocol] ?? exampleRequests.other}
             </pre>
           </div>
