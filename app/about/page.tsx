@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Zap, ArrowRight, DollarSign, Lock, Cpu, Globe } from 'lucide-react';
+import { Zap, ArrowRight, DollarSign, Lock, Cpu, Globe, Bot, CreditCard, Package, BarChart3, Coins } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
@@ -249,21 +249,21 @@ export default function AboutPage() {
           {/* Protocol Support */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-lg mb-2">🔒</div>
+              <div className="mb-2"><Lock className="w-5 h-5 text-zinc-400" /></div>
               <h3 className="text-sm font-semibold text-white mb-1">x402</h3>
               <p className="text-xs text-zinc-400">
                 HTTP 402 Payment Required protocol for programmatic micropayments
               </p>
             </div>
             <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-lg mb-2">💳</div>
+              <div className="mb-2"><CreditCard className="w-5 h-5 text-zinc-400" /></div>
               <h3 className="text-sm font-semibold text-white mb-1">MPP</h3>
               <p className="text-xs text-zinc-400">
                 Micropayment Protocol for Base and World Chain
               </p>
             </div>
             <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-lg mb-2">🤖</div>
+              <div className="mb-2"><Bot className="w-5 h-5 text-zinc-400" /></div>
               <h3 className="text-sm font-semibold text-white mb-1">ACP</h3>
               <p className="text-xs text-zinc-400">
                 Agent Commerce Protocol for agent-to-agent transactions
@@ -294,7 +294,7 @@ export default function AboutPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div className="flex items-start gap-2">
-                      <span className="text-zinc-500 shrink-0 mt-0.5">🔒</span>
+                      <Lock className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5" />
                       <div>
                         <span className="text-zinc-500 block">Auth</span>
                         <span className="text-zinc-300 font-medium">
@@ -303,7 +303,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <span className="text-zinc-500 shrink-0 mt-0.5">📦</span>
+                      <Package className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5" />
                       <div>
                         <span className="text-zinc-500 block">Params</span>
                         <span className="text-zinc-300 font-medium">
@@ -312,7 +312,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <span className="text-zinc-500 shrink-0 mt-0.5">📊</span>
+                      <BarChart3 className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5" />
                       <div>
                         <span className="text-zinc-500 block">Response</span>
                         <span className="text-zinc-300 font-mono break-all">
@@ -321,7 +321,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <span className="text-zinc-500 shrink-0 mt-0.5">💰</span>
+                      <Coins className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5" />
                       <div>
                         <span className="text-zinc-500 block">Pricing</span>
                         <span className="text-zinc-300 font-medium">

@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronUp, Loader2, ShieldCheck, Globe } from 'lucide-react';
+import { ChevronUp, Loader2, ShieldCheck, Globe, Bot, User } from 'lucide-react';
 import { useAccount, useSignMessage } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useState, useEffect, useCallback } from 'react';
@@ -255,10 +255,10 @@ export function UpvoteButton({ serviceId, agentUpvotes, humanUpvotes }: UpvoteBu
         </span>
 
         <div className="text-[9px] text-zinc-500 mt-0.5 whitespace-nowrap hidden sm:flex gap-1 items-center">
-          <span className="text-orange-500/80">🤖 {optimisticAgent}</span>
+          <span className="text-orange-500/80 inline-flex items-center gap-0.5"><Bot className="w-3 h-3 inline" /> {optimisticAgent}</span>
           <span>·</span>
-          <span className={votedWithWorldId ? 'text-indigo-400' : 'text-blue-400/80'}>
-            {votedWithWorldId ? '🌐' : '👤'} {optimisticHuman}
+          <span className={`inline-flex items-center gap-0.5 ${votedWithWorldId ? 'text-indigo-400' : 'text-blue-400/80'}`}>
+            {votedWithWorldId ? <Globe className="w-3 h-3 inline" /> : <User className="w-3 h-3 inline" />} {optimisticHuman}
           </span>
         </div>
       </button>

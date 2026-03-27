@@ -5,7 +5,7 @@ import { ServiceGrid } from '@/components/ServiceGrid';
 import { LeaderboardTabs } from '@/components/LeaderboardTabs';
 import { CategoryFilter } from '@/components/CategoryFilter';
 import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
+import { Search, Globe, Coins, Bot, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { getServices } from '@/lib/actions';
@@ -148,7 +148,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
           <div className="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-orange-500/30 transition-colors">
             <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mb-4">
-              <span className="text-xl">🌐</span>
+              <Globe className="w-5 h-5 text-blue-400" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">World ID Upvotes</h3>
             <p className="text-sm text-zinc-400">
@@ -157,7 +157,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
           </div>
           <div className="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-orange-500/30 transition-colors">
             <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center mb-4">
-              <span className="text-xl">💰</span>
+              <Coins className="w-5 h-5 text-orange-400" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">x402 Payments</h3>
             <p className="text-sm text-zinc-400">
@@ -166,7 +166,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
           </div>
           <div className="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-orange-500/30 transition-colors">
             <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center mb-4">
-              <span className="text-xl">🤖</span>
+              <Bot className="w-5 h-5 text-purple-400" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">AgentKit Trust Tiers</h3>
             <p className="text-sm text-zinc-400">
@@ -195,7 +195,8 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
             href="/analytics"
             className="inline-flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white text-sm font-medium rounded-lg transition-colors"
           >
-            <span>📊 Premium Analytics</span>
+            <BarChart3 className="w-5 h-5 text-purple-400" />
+            <span>Premium Analytics</span>
           </a>
         </div>
 
@@ -240,7 +241,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl">🌐</span>
+                      <Globe className="w-5 h-5 text-blue-400" />
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-white animate-pulse">...</p>
@@ -249,7 +250,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl">🤖</span>
+                      <Bot className="w-5 h-5 text-purple-400" />
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-white animate-pulse">...</p>
@@ -258,7 +259,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl">📊</span>
+                      <BarChart3 className="w-5 h-5 text-purple-400" />
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-white animate-pulse">...</p>
@@ -270,7 +271,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl">🌐</span>
+                      <Globe className="w-5 h-5 text-blue-400" />
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-white">{stats.totalHumanUpvotes.toLocaleString()}</p>
@@ -279,7 +280,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl">🤖</span>
+                      <Bot className="w-5 h-5 text-purple-400" />
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-white">{stats.totalAgentUpvotes.toLocaleString()}</p>
@@ -288,7 +289,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl">📊</span>
+                      <BarChart3 className="w-5 h-5 text-purple-400" />
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-white">{stats.totalServices.toLocaleString()}</p>
@@ -349,14 +350,14 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
               <h3 className="text-lg font-semibold text-white mb-4">Trust Tiers</h3>
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-500/5 border border-blue-500/10">
-                  <span className="text-xl flex-shrink-0">🌐</span>
+                  <Globe className="w-5 h-5 text-blue-400 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-white">Human-backed agents</p>
                     <p className="text-xs text-zinc-400 mt-1">3 free calls, then $0.001</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-zinc-700/20 border border-zinc-700/30">
-                  <span className="text-xl flex-shrink-0">🤖</span>
+                  <Bot className="w-5 h-5 text-purple-400 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-white">Unverified bots</p>
                     <p className="text-xs text-zinc-400 mt-1">$0.01/call</p>
