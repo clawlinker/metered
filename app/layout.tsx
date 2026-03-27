@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Metered - Product Hunt for Paid APIs',
-  description: 'Discover, upvote, and review metered APIs — protocol-agnostic (x402, MPP, ACP, and whatever comes next).',
+  title: 'Metered - The Directory Where Trust Pays Off',
+  description: 'Sybil-resistant rankings powered by World ID. Trust-tiered API access via x402. Human-backed agents pay less.',
 };
 
 export const viewport: Viewport = {

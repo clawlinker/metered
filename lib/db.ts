@@ -42,6 +42,7 @@ async function getDb(): Promise<SqlJsDatabase> {
         category TEXT NOT NULL,
         priceText TEXT NOT NULL,
         network TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'pending',
         submittedAt TEXT NOT NULL,
         verified INTEGER NOT NULL DEFAULT 0
       );
@@ -95,10 +96,12 @@ export interface ServiceRow {
   category: string;
   priceText: string;
   network: string;
+  status: string;
   submittedAt: string;
   verified: number;
   agentUpvotes: number;
   humanUpvotes: number;
+  worldidUpvotes: number;
 }
 
 export interface VoteRow {
@@ -188,15 +191,45 @@ export async function dbHasVoted(serviceId: string, voterAddress: string): Promi
   return !!row;
 }
 
-export async function dbGetVoteCounts(serviceId: string): Promise<{ agentUpvotes: number; humanUpvotes: number }> {
+export async function dbGetVoteCounts(serviceId: string): Promise<{ agentUpvotes: number; humanUpvotes: number; worldidUpvotes: number }> {
   const database = await getDb();
-  const row = queryOne<{ agentUpvotes: number; humanUpvotes: number }>(
+  const row = queryOne<{ agentUpvotes: number; humanUpvotes: number; worldidUpvotes: number }>(
     database,
     `SELECT 
       COALESCE(SUM(CASE WHEN voterType = 'erc8004' THEN 1 ELSE 0 END), 0) as agentUpvotes,
-      COALESCE(SUM(CASE WHEN voterType != 'erc8004' THEN 1 ELSE 0 END), 0) as humanUpvotes
+      COALESCE(SUM(CASE WHEN voterType != 'erc8004' THEN 1 ELSE 0 END), 0) as humanUpvotes,
+      COALESCE(SUM(CASE WHEN voterType = 'worldid' THEN 1 ELSE 0 END), 0) as worldidUpvotes
     FROM votes WHERE serviceId = ?`,
     [serviceId]
   );
-  return row || { agentUpvotes: 0, humanUpvotes: 0 };
+  return row || { agentUpvotes: 0, humanUpvotes: 0, worldidUpvotes: 0 };
+}
+
+export async function dbAddService(
+  name: string,
+  url: string,
+  description: string,
+  protocol: string,
+  category: string,
+  priceText: string,
+  network: string,
+  contact: string
+): Promise<{ success: boolean; id?: string; slug?: string; error?: string }> {
+  const database = await getDb();
+  
+  try {
+    const id = crypto.randomUUID();
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    
+    database.run(
+      `INSERT INTO services (id, name, slug, description, url, protocol, category, priceText, network, status, submittedAt, verified)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [id, name, slug, description, url, protocol, category, priceText, network, 'pending', new Date().toISOString(), 0]
+    );
+    return { success: true, id, slug };
+  } catch (err: unknown) {
+    const error = err as { message?: string };
+    console.error('dbAddService error:', error);
+    return { success: false, error: error?.message || 'Failed to add service' };
+  }
 }

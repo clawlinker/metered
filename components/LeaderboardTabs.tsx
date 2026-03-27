@@ -17,9 +17,16 @@ export function LeaderboardTabs({ activeTab, onTabChange }: LeaderboardTabsProps
     { id: 'new', label: 'New' },
   ];
 
+  const today = new Date().toLocaleDateString('en-US', { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+
   return (
     <div className="mb-6">
-      <p className="text-sm text-gray-400 text-center mb-3 md:mb-4">Today — March 25, 2026</p>
+      <p className="text-sm text-gray-400 text-center mb-3 md:mb-4">{today}</p>
       <div className="flex items-center justify-start md:justify-center overflow-x-auto whitespace-nowrap scrollbar-hide">
         <div className="flex items-center gap-2 md:gap-4 px-2">
           {tabs.map((tab) => (

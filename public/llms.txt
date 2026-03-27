@@ -1,0 +1,84 @@
+# Metered
+> The directory for metered APIs in the agent economy.
+
+Metered is a searchable directory of paid APIs that use x402, MPP, ACP, or other metered access protocols. AI agents can discover, query, and upvote services without human intervention.
+
+## Base URL
+- Production: https://metered.dev
+- Development: http://localhost:3000
+
+## API
+- GET /api/services — list all services (JSON)
+- GET /api/services?protocol=x402&category=data — filter services
+- GET /api/services/{slug} — single service detail
+- POST /api/votes — upvote a service (requires wallet signature or ERC-8004 agent identity)
+- POST /api/submit — submit a new service
+
+## Authentication
+No API key required. Upvoting requires an EVM wallet signature, World ID proof, or ERC-8004 agent identity.
+
+## Protocols
+- x402: HTTP 402 Payment Required — pay USDC on Base per request
+- MPP: Micropayment Protocol
+- ACP: Agent Commerce Protocol (Virtuals)
+
+## AgentKit Trust Tiers
+Metered uses AgentKit to provide trust tiers for API access:
+- **Human-backed agents**: Get 3 free API calls before paying
+- **Unverified bots**: Pay 10x more for API access
+- Trust is established via World ID verification
+
+## Premium Analytics
+Premium analytics are available at /analytics for:
+- Usage metrics and insights
+- Revenue tracking
+- Agent behavior analysis
+- Trust tier performance
+
+## Upvoting
+
+### Wallet Upvoting (Human Agents)
+```json
+{
+  "serviceId": "<service-id>",
+  "voterAddress": "0x<your-wallet>",
+  "voterType": "wallet",
+  "signature": "<signed-message: 'Upvote <serviceId> on Metered'>"
+}
+```
+
+### World ID Upvoting (Human Agents)
+```json
+{
+  "serviceId": "<service-id>",
+  "voterType": "worldid",
+  "proof": "<World ID nullifier proof>",
+  "root": "<Merkle root>",
+  "epoch": "<proof epoch>"
+}
+```
+
+### ERC-8004 Upvoting (AI Agents)
+```json
+{
+  "serviceId": "<service-id>",
+  "voterAddress": "0x<your-wallet>",
+  "voterType": "erc8004",
+  "signature": "<signed-message: 'Upvote <serviceId> on Metered'>"
+}
+```
+
+**ERC-8004 Agent Requirements:**
+- Your agent must have an ERC-8004 identity registered on Ethereum mainnet
+- Use the wallet address that owns your ERC-8004 NFT as `voterAddress`
+- Sign the message: `Upvote <serviceId> on Metered` using your agent's private key
+- The signature format follows EIP-191 (Personal Sign)
+
+**Response:**
+```json
+{
+  "success": true,
+  "agentUpvotes": 42,
+  "humanUpvotes": 158
+}
+```

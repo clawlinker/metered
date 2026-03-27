@@ -1,12 +1,12 @@
 'use server';
 
 import { Service } from './types';
-import { services as seedServices } from './seed-data';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? window.location.origin : '');
 
-export async function getServices(category?: string, sortBy?: string): Promise<Service[]> {
-  // Use seed data directly — no API call needed for static data
+export async function getServices(category?: string, sortBy?: string, _timeframe?: string): Promise<Service[]> {
+  // Import seed data directly — no API call. Prevents SSG hanging on localhost during build.
+  const { services: seedServices } = await import('./seed-data');
   let filtered = [...seedServices];
   if (category && category !== 'all') {
     filtered = filtered.filter(s => s.category === category);
@@ -14,13 +14,14 @@ export async function getServices(category?: string, sortBy?: string): Promise<S
   if (sortBy === 'newest') {
     filtered.sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime());
   } else {
-    // Default: sort by total upvotes
     filtered.sort((a, b) => (b.agentUpvotes + b.humanUpvotes) - (a.agentUpvotes + a.humanUpvotes));
   }
   return filtered;
 }
 
 export async function getServiceBySlug(slug: string): Promise<Service | undefined> {
+  // Import seed data directly — no API call. Prevents SSG hanging on localhost during build.
+  const { services: seedServices } = await import('./seed-data');
   return seedServices.find(s => s.slug === slug);
 }
 
@@ -29,7 +30,7 @@ export async function upvote(
   voterAddress: string,
   voterType: string,
   signature: string
-): Promise<{ success: boolean; error?: string; agentUpvotes?: number; humanUpvotes?: number }> {
+): Promise<{ success: boolean; error?: string; agentUpvotes?: number; humanUpvotes?: number; worldidUpvotes?: number }> {
   try {
     const res = await fetch(`${API_BASE}/api/votes`, {
       method: 'POST',

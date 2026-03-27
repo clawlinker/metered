@@ -77,9 +77,18 @@ export async function GET(
         </div>
         <div
           style={{
+            fontSize: '20px',
+            color: '#6366f1',
+            marginTop: '16px',
+          }}
+        >
+          API: GET /api/services
+        </div>
+        <div
+          style={{
             fontSize: '18px',
             color: '#6b7280',
-            marginTop: '16px',
+            marginTop: '8px',
           }}
         >
           Visit Metered for more services

@@ -9,10 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@coinbase/x402": "^2.1.0",
     "@rainbow-me/rainbowkit": "^2.2.10",
     "@tanstack/react-query": "^5.95.2",
+    "@worldcoin/agentkit": "^0.1.5",
+    "@worldcoin/idkit": "^4.0.11",
+    "@x402/evm": "^2.8.0",
+    "@x402/next": "^2.8.0",
+    "@x402/paywall": "^2.8.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "ethers": "^6.16.0",
     "lucide-react": "^1.6.0",
     "next": "16.2.1",
     "radix-ui": "^1.4.3",

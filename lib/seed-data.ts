@@ -15,6 +15,16 @@ export const services: Service[] = [
     humanUpvotes: 342,
     submittedAt: '2026-02-05',
     verified: true,
+    exampleRequest: `curl -X GET "https://checkr.lol/api/attention?token=PEPE" \\
+  -H "X-Payment: <x402-payment-header>"`,
+    exampleResponse: `{
+  "token": "PEPE",
+  "attention_score": 8.5,
+  "mentions_1h": 342,
+  "sentiment": "bullish",
+  "price_change_24h": 2.3
+}`,
+    exampleCost: '$0.01 per call via x402',
   },
   {
     id: 'pawr-link',
@@ -30,6 +40,16 @@ export const services: Service[] = [
     humanUpvotes: 128,
     submittedAt: '2026-02-10',
     verified: true,
+    exampleRequest: `curl -X POST "https://www.pawr.link/api/x402/create-profile" \\
+  -H "Content-Type: application/json" \\
+  -H "X-Payment: <x402-payment-header>" \\
+  -d '{"username":"myagent","links":[{"label":"Twitter","url":"https://x.com/myagent"}]}'`,
+    exampleResponse: `{
+  "success": true,
+  "profileUrl": "https://www.pawr.link/myagent",
+  "avatarUrl": "https://www.pawr.link/myagent-avatar.png"
+}`,
+    exampleCost: '$9 self-service, $10 curated',
   },
   {
     id: 'bazaar',
@@ -45,6 +65,21 @@ export const services: Service[] = [
     humanUpvotes: 203,
     submittedAt: '2026-03-01',
     verified: true,
+    exampleRequest: `curl -X GET "https://bazaar.computer/api/services?protocol=x402" \\
+  -H "X-Payment: <x402-payment-header>"`,
+    exampleResponse: `{
+  "services": [
+    {
+      "name": "Checkr",
+      "protocol": "x402",
+      "price": "$0.01-0.05",
+      "category": "data"
+    }
+  ],
+  "total": 89,
+  "page": 1
+}`,
+    exampleCost: 'Varies per service — free to discover via x402',
   },
   {
     id: 'coinbase-cdp',
@@ -60,6 +95,15 @@ export const services: Service[] = [
     humanUpvotes: 156,
     submittedAt: '2026-02-28',
     verified: true,
+    exampleRequest: `curl -X POST "https://api.cdp.coinbase.com/v1/wallets" \\
+  -H "Authorization: Bearer <your-api-key>" \\
+  -H "X-Payment: <x402-payment-header>"`,
+    exampleResponse: `{
+  "walletId": "wallet_123abc",
+  "address": "0x1234...5678",
+  "createdAt": "2026-03-26T12:00:00Z"
+}`,
+    exampleCost: '$0.001 per wallet operation',
   },
   {
     id: 'zerion-api',
@@ -75,6 +119,19 @@ export const services: Service[] = [
     humanUpvotes: 89,
     submittedAt: '2026-01-22',
     verified: true,
+    exampleRequest: `curl -X GET "https://api.zerion.io/v1/portfolios/0x123..." \\
+  -H "Authorization: Bearer <your-api-key>" \\
+  -H "X-Payment: <x402-payment-header>"`,
+    exampleResponse: `{
+  "portfolio": {
+    "totalValue": "$12,456.78",
+    "assets": [
+      {"token": "ETH", "balance": "2.5", "value": "$5,200"},
+      {"token": "USDC", "balance": "1000", "value": "$1,000"}
+    ]
+  }
+}`,
+    exampleCost: '$0.01 per request via x402',
   },
   {
     id: 'mercuryclaw',
@@ -90,6 +147,16 @@ export const services: Service[] = [
     humanUpvotes: 156,
     submittedAt: '2026-02-14',
     verified: true,
+    exampleRequest: `curl -X GET "https://api.mercuryclaw.xyz/v1/markets/BTC-USD" \\
+  -H "X-Payment: <x402-payment-header>"`,
+    exampleResponse: `{
+  "symbol": "BTC-USD",
+  "price": "$68,947.23",
+  "volume24h": "$2,486.1M",
+  "openInterest": "$1.8B",
+  "fundingRate": "0.0013%"
+}`,
+    exampleCost: '$0.10 per request via x402',
   },
   {
     id: 'hyperbolic-gpu',
@@ -105,6 +172,24 @@ export const services: Service[] = [
     humanUpvotes: 67,
     submittedAt: '2026-02-20',
     verified: true,
+    exampleRequest: `curl -X POST "https://api.hyperbolic.xyz/v1/completions" \\
+  -H "Authorization: Bearer <your-api-key>" \\
+  -H "X-Payment: <x402-payment-header>" \\
+  -d '{"model": "claude-3.5-sonnet", "prompt": "Write a function"}'`,
+    exampleResponse: `{
+  "id": "cmpl-123abc",
+  "choices": [
+    {
+      "text": "Here is your function...",
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 12,
+    "completion_tokens": 45
+  }
+}`,
+    exampleCost: 'Varies — $0.0001-0.01 per 1K tokens',
   },
   {
     id: 'coingecko',
@@ -120,6 +205,14 @@ export const services: Service[] = [
     humanUpvotes: 178,
     submittedAt: '2026-01-15',
     verified: true,
+    exampleRequest: `curl -X GET "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd" \\
+  -H "Authorization: Bearer <your-api-key>"`,
+    exampleResponse: `{
+  "bitcoin": {
+    "usd": 68947.23
+  }
+}`,
+    exampleCost: 'Free tier available, premium via MPP',
   },
   {
     id: 'tangle-network',
@@ -135,6 +228,15 @@ export const services: Service[] = [
     humanUpvotes: 56,
     submittedAt: '2026-02-01',
     verified: true,
+    exampleRequest: `curl -X POST "https://api.tangle.network/v1/messages" \\
+  -H "X-Payment: <x402-payment-header>" \\
+  -d '{"topic": "crypto", "content": "Hello world"}'`,
+    exampleResponse: `{
+  "messageId": "msg_123abc",
+  "timestamp": "2026-03-27T02:00:00Z",
+  "blockHash": "0xabc123..."
+}`,
+    exampleCost: '$0.001 per message via x402',
   },
   {
     id: 'orthogonal-skills',
@@ -150,6 +252,19 @@ export const services: Service[] = [
     humanUpvotes: 23,
     submittedAt: '2026-02-18',
     verified: true,
+    exampleRequest: `curl -X POST "https://api.orthogonalskills.ai/v1/skills/run" \\
+  -H "Authorization: Bearer <your-api-key>" \\
+  -H "X-Payment: <x402-payment-header>" \\
+  -d '{"skillId": "search-web", "input": "latest AI news"}'`,
+    exampleResponse: `{
+  "taskId": "task_123abc",
+  "status": "completed",
+  "result": {
+    "summary": "Latest AI news...",
+    "sources": ["x.com", "hackernews"]
+  }
+}`,
+    exampleCost: 'Varies per skill — $0.01-0.50 per invocation',
   },
 ];
 

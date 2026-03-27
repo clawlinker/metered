@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/badge';
 export default function SubmitPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submitResult, setSubmitResult] = useState<{ id?: string; slug?: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     url: '',
@@ -20,15 +22,34 @@ export default function SubmitPage() {
     contact: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to submit service');
+      }
+
+      const result = await response.json();
+      setSubmitResult(result);
       setSuccess(true);
-    }, 1500);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to submit service';
+      setError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -44,7 +65,12 @@ export default function SubmitPage() {
               <path d="M20 6L9 17l-5-5" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-4">Service Submitted!</h1>
+          <h1 className="text-3xl font-bold text-white mb-4">Submitted for Review</h1>
+          {submitResult?.slug && (
+            <p className="text-gray-300 mb-2 font-mono text-sm">
+              Your service slug: {submitResult.slug}
+            </p>
+          )}
           <p className="text-gray-400 mb-6">
             Thank you for your submission. Our team will review it and get back to you shortly.
           </p>
@@ -67,6 +93,11 @@ export default function SubmitPage() {
 
       <div className="rounded-2xl bg-white/5 border border-white/10 p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-4 text-red-200 text-center">
+              {error}
+            </div>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium text-gray-300">

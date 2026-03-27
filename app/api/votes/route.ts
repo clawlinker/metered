@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbAddVote, dbGetVoteCounts } from '@/lib/db';
+import { verifyVoteSignature } from '@/lib/verifySignature';
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,6 +11,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'Missing required fields: serviceId, voterAddress, signature' },
         { status: 400 }
+      );
+    }
+
+    // Verify signature for all voter types (wallet and erc8004)
+    const sigResult = await verifyVoteSignature(voterAddress, signature, serviceId);
+
+    if (!sigResult.valid) {
+      return NextResponse.json(
+        { error: sigResult.error || 'Signature verification failed' },
+        { status: 401 }
       );
     }
 

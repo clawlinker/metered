@@ -8,7 +8,7 @@ import { UpvoteButton } from '@/components/UpvoteButton';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { CheckCircle2, ExternalLink, ArrowLeft, Bot, User } from 'lucide-react';
+import { CheckCircle2, ExternalLink, ArrowLeft, Bot, User, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
 interface ServiceDetailClientProps {
@@ -83,6 +83,36 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
 
           <Separator className="my-6 border-white/10" />
 
+          {/* Example section */}
+          {(service.exampleRequest || service.exampleResponse) && (
+            <div className="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mb-6">
+              <h2 className="text-lg font-semibold text-white mb-4">Example</h2>
+              <p className="text-sm text-zinc-400 mb-4">{service.exampleCost || 'Cost: Check service pricing'}</p>
+              
+              {service.exampleRequest && (
+                <div className="space-y-2">
+                  <h3 className="text-sm font-medium text-white">Request</h3>
+                  <div className="rounded-xl bg-gray-950 border border-white/10 p-4 overflow-x-auto max-w-full">
+                    <pre className="text-xs md:text-sm text-green-400 font-mono whitespace-pre-wrap md:whitespace-pre break-all min-w-0">
+                      {service.exampleRequest}
+                    </pre>
+                  </div>
+                </div>
+              )}
+              
+              {service.exampleResponse && (
+                <div className="mt-4 space-y-2">
+                  <h3 className="text-sm font-medium text-white">Response</h3>
+                  <div className="rounded-xl bg-gray-950 border border-white/10 p-4 overflow-x-auto max-w-full">
+                    <pre className="text-xs md:text-sm text-blue-400 font-mono whitespace-pre-wrap md:whitespace-pre break-all min-w-0">
+                      {service.exampleResponse}
+                    </pre>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Metadata grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mb-6">
             {[
@@ -117,10 +147,16 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
               </a>
             </Button>
             <Button
+              asChild
               variant="outline"
               className="border-white/20 text-zinc-300 hover:bg-white/5 hover:text-white"
             >
-              Report Issue
+              <a
+                href={`mailto:hello@metered.computer?subject=Report: ${service.name}&body=Issue with ${service.url}`}
+                className="block w-full h-full"
+              >
+                Report Issue
+              </a>
             </Button>
           </div>
         </div>
@@ -128,9 +164,9 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
         {/* Votes breakdown */}
         <div className="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mb-8">
           <h2 className="text-lg font-semibold text-white mb-6">Community Votes</h2>
-          <div className="grid grid-cols-3 gap-3 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             {/* Total */}
-            <div className="flex flex-col items-center justify-center rounded-xl bg-gray-900/50 border border-white/10 p-3 md:p-6 text-center">
+            <div className="flex flex-col items-center justify-center rounded-xl bg-gray-900/50 border border-white/10 p-3 md:p-6 text-center col-span-2 md:col-span-1">
               <p className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wider mb-1 md:mb-2">Total</p>
               <p className="text-3xl md:text-5xl font-bold text-white">{totalVotes}</p>
             </div>
@@ -141,16 +177,28 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
                 <p className="text-[10px] md:text-xs font-medium uppercase tracking-wider">Agents</p>
               </div>
               <p className="text-2xl md:text-4xl font-bold text-orange-400">{service.agentUpvotes}</p>
-              <p className="text-[10px] md:text-xs text-zinc-500 mt-1 md:mt-2 hidden sm:block">ERC-8004 verified</p>
+              <p className="text-[10px] md:text-xs text-zinc-500 mt-1 md:mt-2 hidden sm:block">Signature verified</p>
             </div>
-            {/* Human */}
+            {/* Human (wallet) */}
             <div className="flex flex-col items-center justify-center rounded-xl bg-blue-500/5 border border-blue-500/20 p-3 md:p-6 text-center">
               <div className="flex items-center gap-1 md:gap-2 text-blue-400 mb-1 md:mb-2">
                 <User className="w-3 h-3 md:w-4 md:h-4" />
                 <p className="text-[10px] md:text-xs font-medium uppercase tracking-wider">Humans</p>
               </div>
               <p className="text-2xl md:text-4xl font-bold text-blue-400">{service.humanUpvotes}</p>
-              <p className="text-[10px] md:text-xs text-zinc-500 mt-1 md:mt-2 hidden sm:block">Wallet-verified</p>
+              <p className="text-[10px] md:text-xs text-zinc-500 mt-1 md:mt-2 hidden sm:block">Signature verified</p>
+            </div>
+            {/* World ID verified */}
+            <div className="flex flex-col items-center justify-center rounded-xl bg-indigo-500/5 border border-indigo-500/20 p-3 md:p-6 text-center">
+              <div className="flex items-center gap-1 md:gap-2 text-indigo-400 mb-1 md:mb-2">
+                <ShieldCheck className="w-3 h-3 md:w-4 md:h-4" />
+                <p className="text-[10px] md:text-xs font-medium uppercase tracking-wider">World ID</p>
+              </div>
+              <p className="text-2xl md:text-4xl font-bold text-indigo-400">
+                {/* worldidUpvotes is not in Service type — show N/A if not available */}
+                {'worldidUpvotes' in service ? (service as any).worldidUpvotes : '—'}
+              </p>
+              <p className="text-[10px] md:text-xs text-zinc-500 mt-1 md:mt-2 hidden sm:block">Orb/Device verified</p>
             </div>
           </div>
         </div>

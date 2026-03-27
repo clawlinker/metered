@@ -55,6 +55,45 @@ const whyCards = [
   },
 ];
 
+const apiEndpoints = [
+  {
+    method: 'GET',
+    path: '/api/services',
+    description: 'List all services in the directory',
+    auth: 'None',
+    params: 'limit?, sortBy?, timeframe?',
+    response: '{ services: Service[]; total: number }',
+    pricing: 'Free',
+  },
+  {
+    method: 'GET',
+    path: '/api/services/[slug]',
+    description: 'Get a specific service by slug',
+    auth: 'None',
+    params: 'None',
+    response: '{ service: Service; voteCounts: { agent: number; human: number } }',
+    pricing: 'Free',
+  },
+  {
+    method: 'POST',
+    path: '/api/votes',
+    description: 'Upvote a service (requires proof of unique human or agent)',
+    auth: 'Wallet signature or World ID proof',
+    params: 'serviceId, type (human|agent)',
+    response: '{ success: boolean; agentUpvotes: number; humanUpvotes: number }',
+    pricing: 'Free (World ID verified humans only)',
+  },
+  {
+    method: 'GET',
+    path: '/api/x402/analytics',
+    description: 'Premium analytics for x402 services (payment required)',
+    auth: 'x402 payment ($0.001)',
+    params: 'period?, category?, timeframe?',
+    response: '{ pricingBreakdown, protocolStats, categoryTrends }',
+    pricing: '$0.001 per request',
+  },
+];
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
@@ -185,6 +224,144 @@ export default function AboutPage() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* API Documentation Section */}
+      <section className="py-20 border-b border-white/10">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="flex items-center gap-2 mb-6">
+            <Cpu className="w-5 h-5 text-orange-500" />
+            <span className="text-sm font-medium text-orange-500 tracking-wide uppercase">
+              API Documentation
+            </span>
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+            Using Metered as an x402 service
+          </h2>
+          <p className="text-zinc-400 mb-8">
+            Metered itself is an x402 service. Developers can access our service
+            listings programmatically using the endpoints below. Authenticated
+            endpoints require proof of unique humanity or payment via x402.
+          </p>
+
+          {/* Protocol Support */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-lg mb-2">🔒</div>
+              <h3 className="text-sm font-semibold text-white mb-1">x402</h3>
+              <p className="text-xs text-zinc-400">
+                HTTP 402 Payment Required protocol for programmatic micropayments
+              </p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-lg mb-2">💳</div>
+              <h3 className="text-sm font-semibold text-white mb-1">MPP</h3>
+              <p className="text-xs text-zinc-400">
+                Micropayment Protocol for Base and World Chain
+              </p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-lg mb-2">🤖</div>
+              <h3 className="text-sm font-semibold text-white mb-1">ACP</h3>
+              <p className="text-xs text-zinc-400">
+                Agent Commerce Protocol for agent-to-agent transactions
+              </p>
+            </div>
+          </div>
+
+          {/* Endpoint Cards */}
+          <div className="space-y-4">
+            {apiEndpoints.map((endpoint, i) => (
+              <div
+                key={endpoint.path}
+                className="rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden hover:border-orange-500/30 transition-colors"
+              >
+                {/* Endpoint Header */}
+                <div className="p-4 border-b border-white/5 flex flex-col sm:flex-row sm:items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-10 h-8 rounded bg-orange-500/10 text-orange-400 font-mono text-sm font-bold">
+                    {endpoint.method}
+                  </span>
+                  <code className="flex-1 font-mono text-sm text-blue-300">
+                    {endpoint.path}
+                  </code>
+                </div>
+
+                {/* Endpoint Details */}
+                <div className="p-4 space-y-3">
+                  <p className="text-sm text-white">{endpoint.description}</p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div className="flex items-start gap-2">
+                      <span className="text-zinc-500 shrink-0 mt-0.5">🔒</span>
+                      <div>
+                        <span className="text-zinc-500 block">Auth</span>
+                        <span className="text-zinc-300 font-medium">
+                          {endpoint.auth}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-zinc-500 shrink-0 mt-0.5">📦</span>
+                      <div>
+                        <span className="text-zinc-500 block">Params</span>
+                        <span className="text-zinc-300 font-medium">
+                          {endpoint.params}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-zinc-500 shrink-0 mt-0.5">📊</span>
+                      <div>
+                        <span className="text-zinc-500 block">Response</span>
+                        <span className="text-zinc-300 font-mono break-all">
+                          {endpoint.response}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-zinc-500 shrink-0 mt-0.5">💰</span>
+                      <div>
+                        <span className="text-zinc-500 block">Pricing</span>
+                        <span className="text-zinc-300 font-medium">
+                          {endpoint.pricing}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Code Example */}
+          <div className="mt-8 p-4 rounded-xl bg-black/40 border border-white/10 font-mono text-xs">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-zinc-400">Example request (JavaScript)</span>
+              <span className="text-orange-400">View on GitHub →</span>
+            </div>
+            <div className="space-y-2">
+              <div className="text-zinc-400">
+                <span className="text-purple-400">const</span> response = <span className="text-purple-400">await</span> fetch(
+                <span className="text-green-400">'/api/services?limit=10'</span>
+                );
+              </div>
+              <div className="text-zinc-400">
+                <span className="text-purple-400">if</span> (response.ok) {'{'}
+              </div>
+              <div className="pl-4 text-zinc-300">
+                <span className="text-purple-400">const</span> data = <span className="text-purple-400">await</span> response.json();
+              </div>
+              <div className="pl-4 text-zinc-300">
+                <span className="text-purple-400">console</span>.log(data);
+                <span className="text-purple-400">{'{'}</span>
+                <span className="text-blue-300">services</span>: [...],
+                <span className="text-blue-300"> total</span>: 42
+                <span className="text-purple-400">{'}]'}</span>;
+              </div>
+              <div className="text-zinc-400">{'}]'}</div>
+            </div>
           </div>
         </div>
       </section>
