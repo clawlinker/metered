@@ -26,9 +26,9 @@ export function LeaderboardTabs({ activeTab, onTabChange }: LeaderboardTabsProps
 
   return (
     <div className="mb-6">
-      <p className="text-sm text-gray-400 text-center mb-3 md:mb-4">{today}</p>
-      <div className="flex items-center justify-start md:justify-center overflow-x-auto whitespace-nowrap scrollbar-hide">
-        <div className="flex items-center gap-2 md:gap-4 px-2">
+      <p className="text-sm text-gray-400 mb-3 md:mb-4 text-center">{today}</p>
+      <div className="flex items-center justify-center overflow-x-auto whitespace-nowrap scrollbar-hide">
+        <div className="flex items-center gap-2 px-2 md:gap-4">
           {tabs.map((tab) => (
             <button
               key={tab.id}

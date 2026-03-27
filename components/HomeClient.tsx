@@ -189,11 +189,11 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
           </div>
         </div>
 
-        {/* Premium Analytics Button */}
-        <div className="mb-6">
+        {/* Premium Analytics Button - muted accent, not primary orange */}
+        <div className="mb-6 text-left md:text-center">
           <a
             href="/analytics"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white text-sm font-medium rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-700/30 hover:bg-zinc-700/50 text-zinc-200 text-sm font-medium rounded-lg transition-colors"
           >
             <BarChart3 className="w-5 h-5 text-purple-400" />
             <span>Premium Analytics</span>
@@ -218,7 +218,7 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
 
             {/* Tabs */}
             {!searchQuery.trim() && (
-              <div>
+              <div className="text-center">
                 <LeaderboardTabs activeTab={activeTab} onTabChange={setActiveTab} />
               </div>
             )}

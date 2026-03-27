@@ -1,3 +1,4 @@
+import { services } from '@/lib/seed-data';
 import { getServiceBySlug } from '@/lib/actions';
 import { Service } from '@/lib/types';
 import { ServiceDetailClient } from '@/components/ServiceDetailClient';
@@ -10,7 +11,7 @@ interface ServicePageProps {
 
 export async function generateStaticParams() {
   // This will be called at build time with the seed data
-  return [{ slug: 'checkr' }, { slug: 'pawr-link' }, { slug: 'bazaar' }, { slug: 'coinbase-cdp' }];
+  return services.map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: ServicePageProps) {

@@ -26,18 +26,18 @@ export function ServiceGrid({ services, title }: ServiceGridProps) {
       {title && (
         <h2 className="text-xl font-semibold text-white mb-6">{title}</h2>
       )}
-      <div className="flex flex-col rounded-xl overflow-hidden border border-white/5">
+      <div className="flex flex-col rounded-xl overflow-hidden border border-white/5 bg-white/[0.02]">
         {services.map((service, idx) => (
           <div
             key={service.id}
-            className="flex items-start gap-3 py-4 px-4 hover:bg-white/[0.03] border-b border-white/5 last:border-b-0 transition-colors"
+            className="flex items-start gap-3 py-4 px-4 hover:bg-white/[0.04] border-b border-white/5 last:border-b-0 transition-colors"
           >
             {/* LEFT: Rank + Thumbnail */}
             <div className="flex items-center gap-2 flex-shrink-0">
-              <span className="text-xs font-medium text-zinc-600 w-4 text-right hidden md:block tabular-nums">
+              <span className="text-xs font-semibold text-orange-500/80 w-4 text-right hidden md:block tabular-nums">
                 {idx + 1}
               </span>
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-white/5 flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-white/10 flex items-center justify-center flex-shrink-0 shadow-sm">
                 <span className="text-base font-bold text-orange-500">
                   {service.name.charAt(0)}
                 </span>
@@ -57,17 +57,17 @@ export function ServiceGrid({ services, title }: ServiceGridProps) {
               <p className="text-xs text-zinc-400 line-clamp-2 mb-2 leading-relaxed">
                 {service.description}
               </p>
-              <div className="flex items-center gap-1.5 text-[11px] text-zinc-500 flex-wrap">
+              <div className="flex items-center gap-2 text-[11px] text-zinc-500 flex-wrap">
                 <ProtocolBadge protocol={service.protocol} />
-                <span className="text-zinc-700">·</span>
+                <span className="text-zinc-600">•</span>
                 <span>{service.priceText}</span>
-                <span className="text-zinc-700">·</span>
+                <span className="text-zinc-600">•</span>
                 <span className="text-zinc-600">{service.network}</span>
               </div>
             </Link>
 
-            {/* RIGHT: Upvote — always visible, 44px min touch target */}
-            <div className="flex-shrink-0 flex items-center self-center">
+            {/* RIGHT: Upvote — consistent width, better spacing */}
+            <div className="flex-shrink-0 flex items-center self-center pl-2">
               <UpvoteButton
                 serviceId={service.id}
                 agentUpvotes={service.agentUpvotes}

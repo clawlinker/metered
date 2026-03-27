@@ -170,7 +170,7 @@ export default function AnalyticsPage() {
 
         {/* Paywall */}
         {!unlocked && (
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 md:p-12 text-center mb-10 relative overflow-hidden">
+          <div className="rounded-2xl border border-orange-500/20 bg-orange-500/5 p-8 md:p-12 text-center mb-10 relative overflow-hidden">
             <div className="absolute inset-0 flex flex-col gap-3 p-8 opacity-20 pointer-events-none select-none blur-[3px]">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="flex gap-3 items-center">
@@ -185,9 +185,20 @@ export default function AnalyticsPage() {
                 <Lock className="w-6 h-6 text-orange-400" />
               </div>
               <h2 className="text-xl font-bold text-white mb-2">Premium Analytics</h2>
-              <p className="text-zinc-400 text-sm mb-6 max-w-sm mx-auto">Pay $0.001 via x402 on Base to unlock live market data, protocol benchmarks, and category trends.</p>
+              
+              {/* Payment badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-4">
+                <span className="text-xs font-semibold text-orange-400 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                  $0.001 per request
+                </span>
+              </div>
+              
+              <p className="text-zinc-300 text-sm mb-6 max-w-sm mx-auto">
+                <span className="font-medium text-white">x402 micropayment protocol</span> required to unlock live market data, protocol benchmarks, and category trends on Base Network.
+              </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button onClick={handleUnlock} disabled={loading} className="bg-orange-500 hover:bg-orange-600 text-white gap-2 active:scale-[0.97] transition-transform">
+                <Button onClick={handleUnlock} disabled={loading} className="bg-orange-500 hover:bg-orange-600 text-white gap-2 active:scale-[0.97] transition-transform shadow-lg shadow-orange-500/20">
                   {loading ? <><Loader2 className="w-4 h-4 animate-spin" />Unlocking…</> : <><Zap className="w-4 h-4" />Unlock with x402 · $0.001</>}
                 </Button>
                 <Button variant="outline" className="border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 gap-2" asChild>

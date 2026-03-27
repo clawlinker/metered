@@ -2,7 +2,7 @@
 
 import { Service } from './types';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? window.location.origin : '');
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3100';
 
 export async function getServices(category?: string, sortBy?: string, _timeframe?: string): Promise<Service[]> {
   // Import seed data directly — no API call. Prevents SSG hanging on localhost during build.

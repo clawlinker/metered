@@ -69,10 +69,10 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
           {/* Title + upvote */}
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
-              <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">{service.name}</h1>
-              <p className="text-sm md:text-lg text-zinc-400">{service.description}</p>
+              <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-snug">{service.name}</h1>
+              <p className="text-sm md:text-lg text-zinc-400 leading-relaxed">{service.description}</p>
             </div>
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 flex items-center self-center">
               <UpvoteButton
                 serviceId={service.id}
                 agentUpvotes={service.agentUpvotes}
@@ -90,7 +90,7 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
               <p className="text-sm text-zinc-400 mb-4">{service.exampleCost || 'Cost: Check service pricing'}</p>
               
               {service.exampleRequest && (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <h3 className="text-sm font-medium text-white">Request</h3>
                   <div className="rounded-xl bg-gray-950 border border-white/10 p-4 overflow-x-auto max-w-full">
                     <pre className="text-xs md:text-sm text-green-400 font-mono whitespace-pre-wrap md:whitespace-pre break-all min-w-0">
@@ -101,7 +101,7 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
               )}
               
               {service.exampleResponse && (
-                <div className="mt-4 space-y-2">
+                <div className="space-y-3">
                   <h3 className="text-sm font-medium text-white">Response</h3>
                   <div className="rounded-xl bg-gray-950 border border-white/10 p-4 overflow-x-auto max-w-full">
                     <pre className="text-xs md:text-sm text-blue-400 font-mono whitespace-pre-wrap md:whitespace-pre break-all min-w-0">
@@ -135,6 +135,25 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
             ))}
           </div>
 
+          {/* Payment method indicator */}
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            {service.protocol === 'x402' && (
+              <Badge variant="outline" className="bg-purple-500/10 text-purple-400 border-purple-500/20">
+                x402 micropayment
+              </Badge>
+            )}
+            {service.protocol === 'mpp' && (
+              <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/20">
+                MPP payment
+              </Badge>
+            )}
+            {service.protocol === 'acp' && (
+              <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+                ACP integration
+              </Badge>
+            )}
+          </div>
+
           {/* CTA buttons */}
           <div className="flex flex-wrap gap-3">
             <Button
@@ -143,7 +162,7 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
             >
               <a href={service.url} target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="w-4 h-4" />
-                Visit Website
+                Use Service
               </a>
             </Button>
             <Button
@@ -158,6 +177,18 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
                 Report Issue
               </a>
             </Button>
+            {service.exampleRequest && (
+              <Button
+                asChild
+                variant="ghost"
+                className="text-zinc-400 hover:text-white hover:bg-white/5 gap-2"
+              >
+                <a href={service.url} target="_blank" rel="noopener noreferrer">
+                  <Bot className="w-4 h-4" />
+                  Agent Integration Guide
+                </a>
+              </Button>
+            )}
           </div>
         </div>
 
@@ -203,8 +234,261 @@ export function ServiceDetailClient({ service, similarServices }: ServiceDetailC
           </div>
         </div>
 
-        {/* Integration example */}
+        {/* Agent Integration section */}
         <div className="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <Bot className="w-5 h-5 text-purple-400" />
+            <h2 className="text-lg font-semibold text-white">Agent Integration</h2>
+          </div>
+          
+          {/* AgentKit Trust Badge */}
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <div className="flex items-center gap-2 rounded-lg bg-green-500/10 border border-green-500/20 px-3 py-2">
+              <div className="w-2 h-2 rounded-full bg-green-400" />
+              <span className="text-sm font-medium text-green-400">AgentKit Trust: Human-Backed</span>
+            </div>
+            <div className="flex items-center gap-2 rounded-lg bg-yellow-500/10 border border-yellow-500/20 px-3 py-2">
+              <div className="w-2 h-2 rounded-full bg-yellow-400" />
+              <span className="text-sm font-medium text-yellow-400">3 free calls before payment</span>
+            </div>
+            <div className="flex items-center gap-2 rounded-lg bg-red-500/10 border border-red-500/20 px-3 py-2">
+              <div className="w-2 h-2 rounded-full bg-red-400" />
+              <span className="text-sm font-medium text-red-400">10x rate for unverified bots</span>
+            </div>
+          </div>
+
+          {/* Authentication Methods */}
+          <div className="mb-6">
+            <h3 className="text-sm font-medium text-white mb-3">Authentication Methods</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {service.protocol === 'x402' && (
+                <div className="rounded-xl bg-gray-900/50 border border-purple-500/20 p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                      <span className="text-purple-400 font-bold text-xs">x402</span>
+                    </div>
+                    <span className="text-sm font-medium text-purple-400">x402 Micropayment</span>
+                  </div>
+                  <p className="text-xs text-zinc-400 mb-3">
+                    Payment header for x402 protocol. Includes authentication and payment in one header.
+                  </p>
+                  <div className="rounded-lg bg-gray-950 border border-purple-500/10 p-3">
+                    <code className="text-xs text-purple-300 font-mono">X-Payment: &lt;x402-payment-header&gt;</code>
+                  </div>
+                </div>
+              )}
+              
+              {service.protocol === 'mpp' && (
+                <div className="rounded-xl bg-gray-900/50 border border-blue-500/20 p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                      <span className="text-blue-400 font-bold text-xs">MPP</span>
+                    </div>
+                    <span className="text-sm font-medium text-blue-400">MPP Token</span>
+                  </div>
+                  <p className="text-xs text-zinc-400 mb-3">
+                    Authentication token for Metered Payment Protocol. Get tokens via your wallet.
+                  </p>
+                  <div className="rounded-lg bg-gray-950 border border-blue-500/10 p-3">
+                    <code className="text-xs text-blue-300 font-mono">Authorization: Bearer &lt;mpp-token&gt;</code>
+                  </div>
+                </div>
+              )}
+              
+              {service.protocol === 'acp' && (
+                <div className="rounded-xl bg-gray-900/50 border border-emerald-500/20 p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                      <span className="text-emerald-400 font-bold text-xs">ACP</span>
+                    </div>
+                    <span className="text-sm font-medium text-emerald-400">ACP Token</span>
+                  </div>
+                  <p className="text-xs text-zinc-400 mb-3">
+                    Agent Commerce Protocol token for ACP-based integrations.
+                  </p>
+                  <div className="rounded-lg bg-gray-950 border border-emerald-500/10 p-3">
+                    <code className="text-xs text-emerald-300 font-mono">Authorization: Bearer &lt;acp-token&gt;</code>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* API Examples */}
+          <div className="mb-6">
+            <h3 className="text-sm font-medium text-white mb-3">API Examples</h3>
+            <div className="space-y-4">
+              {/* curl example */}
+              <div className="rounded-xl bg-gray-900/50 border border-white/10 overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/5">
+                  <span className="text-xs font-medium text-zinc-300">curl</span>
+                  <button 
+                    className="text-xs text-orange-400 hover:text-orange-300 transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const code = service.exampleRequest || exampleRequests[service.protocol] || exampleRequests.other;
+                      navigator.clipboard.writeText(code);
+                    }}
+                  >
+                    Copy
+                  </button>
+                </div>
+                <div className="p-4 overflow-x-auto">
+                  <pre className="text-xs md:text-sm text-green-400 font-mono whitespace-pre-wrap md:whitespace-pre break-all min-w-0">
+                    {service.exampleRequest || exampleRequests[service.protocol] || exampleRequests.other}
+                  </pre>
+                </div>
+              </div>
+
+              {/* JavaScript example */}
+              <div className="rounded-xl bg-gray-900/50 border border-white/10 overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/5">
+                  <span className="text-xs font-medium text-zinc-300">JavaScript / Fetch</span>
+                  <button 
+                    className="text-xs text-orange-400 hover:text-orange-300 transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const fetchCode = `// ${service.protocol === 'x402' ? 'x402' : service.protocol === 'mpp' ? 'MPP' : 'ACP'} example
+const response = await fetch('${service.url}', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    ${service.protocol === 'x402' ? "'X-Payment': '&lt;x402-payment-header&gt;'" : service.protocol === 'mpp' ? "'Authorization': 'Bearer &lt;mpp-token&gt;'" : "'Authorization': 'Bearer &lt;acp-token&gt;'"}
+  },
+  body: JSON.stringify({ query: 'example' })
+});
+
+const data = await response.json();
+console.log(data);`;
+                      navigator.clipboard.writeText(fetchCode);
+                    }}
+                  >
+                    Copy
+                  </button>
+                </div>
+                <div className="p-4 overflow-x-auto">
+                  <pre className="text-xs md:text-sm text-blue-300 font-mono whitespace-pre-wrap md:whitespace-pre break-all min-w-0">
+                    {`// ${service.protocol === 'x402' ? 'x402' : service.protocol === 'mpp' ? 'MPP' : 'ACP'} example
+const response = await fetch('${service.url}', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    ${service.protocol === 'x402' ? "'X-Payment': '&lt;x402-payment-header&gt;'" : service.protocol === 'mpp' ? "'Authorization': 'Bearer &lt;mpp-token&gt;'" : "'Authorization': 'Bearer &lt;acp-token&gt;'"}
+  },
+  body: JSON.stringify({ query: 'example' })
+});
+
+const data = await response.json();
+console.log(data);`}
+                  </pre>
+                </div>
+              </div>
+
+              {/* Python example */}
+              <div className="rounded-xl bg-gray-900/50 border border-white/10 overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/5">
+                  <span className="text-xs font-medium text-zinc-300">Python / requests</span>
+                  <button 
+                    className="text-xs text-orange-400 hover:text-orange-300 transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const pyCode = `# ${service.protocol === 'x402' ? 'x402' : service.protocol === 'mpp' ? 'MPP' : 'ACP'} example
+import requests
+
+url = '${service.url}'
+headers = {
+    'Content-Type': 'application/json',
+    ${service.protocol === 'x402' ? "'X-Payment': '&lt;x402-payment-header&gt;'" : service.protocol === 'mpp' ? "'Authorization': 'Bearer &lt;mpp-token&gt;'" : "'Authorization': 'Bearer &lt;acp-token&gt;'"}
+}
+data = {'query': 'example'}
+
+response = requests.post(url, json=data, headers=headers)
+print(response.json())`;
+                      navigator.clipboard.writeText(pyCode);
+                    }}
+                  >
+                    Copy
+                  </button>
+                </div>
+                <div className="p-4 overflow-x-auto">
+                  <pre className="text-xs md:text-sm text-emerald-300 font-mono whitespace-pre-wrap md:whitespace-pre break-all min-w-0">
+                    {`# ${service.protocol === 'x402' ? 'x402' : service.protocol === 'mpp' ? 'MPP' : 'ACP'} example
+import requests
+
+url = '${service.url}'
+headers = {
+    'Content-Type': 'application/json',
+    ${service.protocol === 'x402' ? "'X-Payment': '&lt;x402-payment-header&gt;'" : service.protocol === 'mpp' ? "'Authorization': 'Bearer &lt;mpp-token&gt;'" : "'Authorization': 'Bearer &lt;acp-token&gt;'"}
+}
+data = {'query': 'example'}
+
+response = requests.post(url, json=data, headers=headers)
+print(response.json())`}
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Common Use Cases */}
+          <div className="mb-6">
+            <h3 className="text-sm font-medium text-white mb-3">Common Use Cases</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {[
+                "Agent-to-agent service calls via ACP",
+                "Automated data fetching with x402 micropayments",
+                "Human-verified workflow with MPP tokens",
+                "Rate-limited programmatic access",
+                "Trust-tiered pricing based on AgentKit status",
+                "Stateless authentication via payment headers"
+              ].map((useCase, i) => (
+                <div key={i} className="flex items-start gap-2 rounded-lg bg-white/5 p-3 border border-white/5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-1.5 flex-shrink-0" />
+                  <span className="text-xs text-zinc-300">{useCase}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Rate Limits */}
+          {service.rateLimit && (
+            <div className="mb-6">
+              <h3 className="text-sm font-medium text-white mb-3">Rate Limits</h3>
+              <div className="rounded-xl bg-gray-900/50 border border-white/10 p-4">
+                <p className="text-sm text-zinc-300">{service.rateLimit}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Final CTA */}
+          <div className="mt-6 pt-6 border-t border-white/10">
+            <p className="text-xs text-zinc-500 mb-3">
+              For full API reference and documentation, visit the{' '}
+              <a
+                href={service.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-400 hover:underline font-medium transition-colors"
+              >
+                official documentation
+              </a>
+              .
+            </p>
+            <div className="flex items-center gap-3 text-xs text-zinc-500">
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="w-3 h-3" />
+                Verified by Metered
+              </span>
+              <span className="flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3" />
+                AgentKit Trust enabled
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Integration example (deprecated, kept for reference) */}
+        <div className="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8 mb-8 opacity-50">
           <h2 className="text-lg font-semibold text-white mb-4">Example Request</h2>
           <div className="rounded-xl bg-gray-950 border border-white/10 p-4 overflow-x-auto max-w-full">
             <pre className="text-xs md:text-sm text-green-400 font-mono whitespace-pre-wrap md:whitespace-pre break-all md:break-normal min-w-0">

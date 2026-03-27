@@ -102,6 +102,9 @@ export interface ServiceRow {
   agentUpvotes: number;
   humanUpvotes: number;
   worldidUpvotes: number;
+  exampleRequest?: string;
+  exampleResponse?: string;
+  exampleCost?: string;
 }
 
 export interface VoteRow {
@@ -138,6 +141,7 @@ function queryOne<T>(database: SqlJsDatabase, sql: string, params: SqlValue[] = 
 export async function dbGetServices(category?: string): Promise<ServiceRow[]> {
   const database = await getDb();
   
+  // Get services with upvote counts
   const baseQuery = `
     SELECT 
       s.*,
@@ -150,10 +154,26 @@ export async function dbGetServices(category?: string): Promise<ServiceRow[]> {
     ORDER BY (agentUpvotes + humanUpvotes) DESC
   `;
 
+  let rows;
   if (category && category !== 'all') {
-    return queryAll<ServiceRow>(database, baseQuery, [category]);
+    rows = queryAll<ServiceRow>(database, baseQuery, [category]);
+  } else {
+    rows = queryAll<ServiceRow>(database, baseQuery);
   }
-  return queryAll<ServiceRow>(database, baseQuery);
+
+  // Fill in example fields from seed data if missing
+  const { services: seedServices } = await import('./seed-data');
+  const seedMap = new Map(seedServices.map(s => [s.slug, s]));
+
+  return rows.map(row => {
+    const seed = seedMap.get(row.slug);
+    return {
+      ...row,
+      exampleRequest: seed?.exampleRequest,
+      exampleResponse: seed?.exampleResponse,
+      exampleCost: seed?.exampleCost,
+    };
+  });
 }
 
 export async function dbAddVote(

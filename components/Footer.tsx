@@ -32,8 +32,8 @@ function CoinbaseLogo({ className }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-gray-950 mt-auto pb-safe">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 pt-10">
+    <footer className="border-t border-zinc-800 bg-gray-950 mt-auto pb-safe">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 pt-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           {/* Brand */}
           <div className="flex flex-col gap-2">
@@ -47,12 +47,12 @@ export function Footer() {
 
             {/* Hackathon badge */}
             <div className="flex items-center gap-1.5 mt-1">
-              <div className="flex items-center gap-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] px-2.5 py-1">
+              <div className="flex items-center gap-1.5 rounded-full bg-zinc-800 px-2.5 py-1 border border-zinc-700">
                 <CoinbaseLogo className="w-3.5 h-3.5 flex-shrink-0" />
-                <span className="text-[10px] font-medium text-zinc-400">x402</span>
-                <span className="text-zinc-700 text-[10px]">+</span>
+                <span className="text-[10px] font-semibold text-zinc-300">x402</span>
+                <span className="text-zinc-600 text-[10px]">+</span>
                 <WorldChainLogo className="w-3.5 h-3.5 flex-shrink-0" />
-                <span className="text-[10px] font-medium text-zinc-400">World ID</span>
+                <span className="text-[10px] font-semibold text-zinc-300">World ID</span>
               </div>
             </div>
           </div>
@@ -60,21 +60,21 @@ export function Footer() {
           {/* Links */}
           <nav className="flex flex-col sm:flex-row gap-6 sm:gap-10 text-sm">
             <div className="flex flex-col gap-2">
-              <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Directory</p>
-              <Link href="/" className="text-zinc-500 hover:text-white transition-colors min-h-[44px] flex items-center">Browse All</Link>
-              <Link href="/analytics" className="text-zinc-500 hover:text-white transition-colors min-h-[44px] flex items-center">Analytics</Link>
-              <Link href="/submit" className="text-zinc-500 hover:text-white transition-colors min-h-[44px] flex items-center">Submit</Link>
-              <Link href="/about" className="text-zinc-500 hover:text-white transition-colors min-h-[44px] flex items-center">About</Link>
+              <p className="text-xs font-semibold text-zinc-300 uppercase tracking-wider">Directory</p>
+              <Link href="/" className="text-zinc-500 hover:text-orange-400 transition-colors min-h-[44px] flex items-center">Browse All</Link>
+              <Link href="/analytics" className="text-zinc-500 hover:text-orange-400 transition-colors min-h-[44px] flex items-center">Analytics</Link>
+              <Link href="/submit" className="text-zinc-500 hover:text-orange-400 transition-colors min-h-[44px] flex items-center">Submit</Link>
+              <Link href="/about" className="text-zinc-500 hover:text-orange-400 transition-colors min-h-[44px] flex items-center">About</Link>
             </div>
             <div className="flex flex-col gap-2">
-              <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Protocols</p>
-              <a href="https://x402.codes" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white transition-colors min-h-[44px] flex items-center">x402</a>
-              <a href="https://virtuals.io" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white transition-colors min-h-[44px] flex items-center">ACP</a>
+              <p className="text-xs font-semibold text-zinc-300 uppercase tracking-wider">Protocols</p>
+              <a href="https://x402.codes" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-orange-400 transition-colors min-h-[44px] flex items-center">x402</a>
+              <a href="https://virtuals.io" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-orange-400 transition-colors min-h-[44px] flex items-center">ACP</a>
             </div>
           </nav>
         </div>
 
-        <div className="mt-8 pb-6 border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="mt-6 pb-6 border-t border-zinc-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-zinc-600">
             © 2026 Metered. Built for the agent economy.
           </p>
@@ -92,12 +92,12 @@ export function Footer() {
               Built with
               <span className="inline-flex items-center gap-1">
                 <CoinbaseLogo className="w-3 h-3" />
-                <span className="text-zinc-500 font-medium">x402</span>
+                <span className="text-zinc-500 font-semibold">x402</span>
               </span>
-              <span className="text-zinc-700">+</span>
+              <span className="text-zinc-600">+</span>
               <span className="inline-flex items-center gap-1">
                 <WorldChainLogo className="w-3 h-3" />
-                <span className="text-zinc-500 font-medium">World ID</span>
+                <span className="text-zinc-500 font-semibold">World ID</span>
               </span>
             </span>
           </div>
