@@ -86,20 +86,6 @@ export function Footer() {
             <Link href="/submit" className="hover:text-zinc-400 transition-colors">
               List Your API
             </Link>
-            <span>·</span>
-            {/* Built with badge */}
-            <span className="inline-flex items-center gap-1.5 text-zinc-600">
-              Built with
-              <span className="inline-flex items-center gap-1">
-                <CoinbaseLogo className="w-3 h-3" />
-                <span className="text-zinc-500 font-semibold">x402</span>
-              </span>
-              <span className="text-zinc-600">+</span>
-              <span className="inline-flex items-center gap-1">
-                <WorldChainLogo className="w-3 h-3" />
-                <span className="text-zinc-500 font-semibold">World ID</span>
-              </span>
-            </span>
           </div>
         </div>
       </div>

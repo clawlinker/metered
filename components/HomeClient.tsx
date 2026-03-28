@@ -122,11 +122,11 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
         {/* Hero — only shown on first visit or desktop */}
         <div className="text-center mb-10">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-            The directory where trust pays off.
+            The x402 API directory for AI agents and developers.
           </h1>
           <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-8">
-            Sybil-resistant rankings powered by World ID. Trust-tiered API access via x402.
-            Human-backed agents pay less.
+            Verified trust tiers powered by World ID. Pay per API call with USDC.
+            Human-backed agents get free calls.
           </p>
           <div className="flex items-center justify-center gap-3">
             <Link
@@ -150,9 +150,9 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
             <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mb-4">
               <Globe className="w-5 h-5 text-blue-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">World ID Upvotes</h3>
+            <h3 className="text-lg font-semibold text-white mb-2">World ID Verified</h3>
             <p className="text-sm text-zinc-400">
-              Prove you are a unique human. Your votes count more. No sybils.
+              Prove unique human identity. Your votes count more. No sybils.
             </p>
           </div>
           <div className="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-orange-500/30 transition-colors">
@@ -168,24 +168,10 @@ export function HomeClient({ initialServices: propServices }: HomeClientProps) {
             <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center mb-4">
               <Bot className="w-5 h-5 text-purple-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">AgentKit Trust Tiers</h3>
+            <h3 className="text-lg font-semibold text-white mb-2">Trust Tiers</h3>
             <p className="text-sm text-zinc-400">
-              Human-backed agents get 3 free calls. Unverified bots pay 10x more.
+              Human-backed agents get 3 free calls. Unverified bots pay $0.01/call.
             </p>
-          </div>
-        </div>
-
-        <p className="text-sm text-zinc-400 text-left md:text-center mb-8">
-          Built with x402 + World ID. Trust that pays off.
-        </p>
-
-        {/* Trust Badges */}
-        <div className="flex items-center justify-center gap-6 mb-12">
-          <div className="flex items-center gap-2 text-zinc-400">
-            <span className="text-lg"> Coinbase</span>
-          </div>
-          <div className="flex items-center gap-2 text-zinc-400">
-            <span className="text-lg"> World Chain</span>
           </div>
         </div>
 
