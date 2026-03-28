@@ -21,4 +21,5 @@ export interface Service {
   exampleRequest?: string; // Example curl or code snippet
   exampleResponse?: string; // Example JSON response
   exampleCost?: string; // Cost per call
+  rateLimit?: string; // Rate limit info
 }
